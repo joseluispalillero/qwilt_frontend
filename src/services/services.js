@@ -4,7 +4,7 @@ import AxiosOffline from 'axios-offline'
 import LocalForage from "localforage"
 const baseURL = Global.url;
 
-class AuthService {
+class Services {
     constructor() {
         let AxiosOfflineAdapter = AxiosOffline({
             defaultAdapter: axios.defaults.adapter, //require, basic adapter
@@ -202,4 +202,4 @@ class AuthService {
     }
 }
 
-export default AuthService
+export default Services

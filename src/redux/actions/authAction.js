@@ -1,6 +1,6 @@
 import Services from '../../services/services'
 import Global from "../../global";
-const authService = new AuthService()
+const authService = new Services()
 
 // action types
 export const UPDATE_USER = 'UPDATE_USER'
