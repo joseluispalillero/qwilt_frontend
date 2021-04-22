@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
@@ -6,63 +6,46 @@ import {
   CardContent,
   Divider,
   Grid,
-  Typography
-} from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+  Typography,
+} from "@material-ui/core";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 const ProductCard = ({ product, ...rest }) => (
   <Card
     sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%'
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
     }}
     {...rest}
   >
     <CardContent>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          pb: 3
+          display: "flex",
+          justifyContent: "center",
+          pb: 3,
         }}
       >
-        <Avatar
-          alt="Product"
-          src={product.media}
-          variant="square"
-        />
+        <Avatar alt="Product" src={product.media} variant="square" />
       </Box>
-      <Typography
-        align="center"
-        color="textPrimary"
-        gutterBottom
-        variant="h4"
-      >
+      <Typography align="center" color="textPrimary" gutterBottom variant="h4">
         {product.title}
       </Typography>
-      <Typography
-        align="center"
-        color="textPrimary"
-        variant="body1"
-      >
+      <Typography align="center" color="textPrimary" variant="body1">
         {product.description}
       </Typography>
     </CardContent>
     <Box sx={{ flexGrow: 1 }} />
     <Divider />
     <Box sx={{ p: 2 }}>
-      <Grid
-        container
-        spacing={2}
-        sx={{ justifyContent: 'space-between' }}
-      >
+      <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
         <Grid
           item
           sx={{
-            alignItems: 'center',
-            display: 'flex'
+            alignItems: "center",
+            display: "flex",
           }}
         >
           <AccessTimeIcon color="action" />
@@ -78,8 +61,8 @@ const ProductCard = ({ product, ...rest }) => (
         <Grid
           item
           sx={{
-            alignItems: 'center',
-            display: 'flex'
+            alignItems: "center",
+            display: "flex",
           }}
         >
           <GetAppIcon color="action" />
@@ -89,9 +72,7 @@ const ProductCard = ({ product, ...rest }) => (
             sx={{ pl: 1 }}
             variant="body2"
           >
-            {product.totalDownloads}
-            {' '}
-            Downloads
+            {product.totalDownloads} Downloads
           </Typography>
         </Grid>
       </Grid>
@@ -100,7 +81,7 @@ const ProductCard = ({ product, ...rest }) => (
 );
 
 ProductCard.propTypes = {
-  product: PropTypes.object.isRequired
+  product: PropTypes.object.isRequired,
 };
 
 export default ProductCard;

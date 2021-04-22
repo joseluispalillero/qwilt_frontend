@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useEffect } from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
@@ -8,8 +8,8 @@ import {
   Drawer,
   Hidden,
   List,
-  Typography
-} from '@material-ui/core';
+  Typography,
+} from "@material-ui/core";
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
@@ -18,57 +18,57 @@ import {
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
-  Users as UsersIcon
-} from 'react-feather';
-import NavItem from './NavItem';
+  Users as UsersIcon,
+} from "react-feather";
+import NavItem from "./NavItem";
 
 const user = {
-  avatar: '/static/images/avatars/avatar_5.png',
-  jobTitle: 'Customer 1',
-  name: 'Customer firstname lastname'
+  avatar: "/static/images/avatars/avatar_5.png",
+  jobTitle: "Customer 1",
+  name: "Customer firstname lastname",
 };
 
 const items = [
   {
-    href: '/app/dashboard',
+    href: "/app/dashboard",
     icon: BarChartIcon,
-    title: 'Dashboard'
+    title: "Dashboard",
   },
   {
-    href: '/app/customers',
+    href: "/app/customers",
     icon: UsersIcon,
-    title: 'Customers'
+    title: "Customers",
   },
   {
-    href: '/app/products',
+    href: "/app/products",
     icon: ShoppingBagIcon,
-    title: 'Products'
+    title: "Products",
   },
   {
-    href: '/app/account',
+    href: "/app/account",
     icon: UserIcon,
-    title: 'Account'
+    title: "Account",
   },
   {
-    href: '/app/settings',
+    href: "/app/settings",
     icon: SettingsIcon,
-    title: 'Settings'
+    title: "Settings",
   },
   {
-    href: '/login',
+    href: "/login",
     icon: LockIcon,
-    title: 'Login'
+    title: "Login",
   },
   {
-    href: '/register',
+    href: "/register",
     icon: UserPlusIcon,
-    title: 'Register'
+    title: "Register",
   },
   {
-    href: '/404',
+    href: "/404",
     icon: AlertCircleIcon,
-    title: 'Error'
-  }
+    title: "Error",
+  },
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
@@ -83,39 +83,33 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const content = (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%'
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
       <Box
         sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          p: 2
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          p: 2,
         }}
       >
         <Avatar
           component={RouterLink}
           src={user.avatar}
           sx={{
-            cursor: 'pointer',
+            cursor: "pointer",
             width: 64,
-            height: 64
+            height: 64,
           }}
           to="/app/account"
         />
-        <Typography
-          color="textPrimary"
-          variant="h5"
-        >
+        <Typography color="textPrimary" variant="h5">
           {user.name}
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
+        <Typography color="textSecondary" variant="body2">
           {user.jobTitle}
         </Typography>
       </Box>
@@ -146,8 +140,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           variant="temporary"
           PaperProps={{
             sx: {
-              width: 256
-            }
+              width: 256,
+            },
           }}
         >
           {content}
@@ -162,8 +156,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             sx: {
               width: 256,
               top: 64,
-              height: 'calc(100% - 64px)'
-            }
+              height: "calc(100% - 64px)",
+            },
           }}
         >
           {content}
@@ -175,12 +169,12 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
 
 DashboardSidebar.propTypes = {
   onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool
+  openMobile: PropTypes.bool,
 };
 
 DashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
-  openMobile: false
+  onMobileClose: () => {},
+  openMobile: false,
 };
 
 export default DashboardSidebar;
