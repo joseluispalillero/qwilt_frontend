@@ -10,11 +10,17 @@ import ProductList from "src/pages/ProductList";
 import Register from "src/pages/Register";
 import Settings from "src/pages/Settings";
 
+import PropertiesList from "src/pages/PropertiesList";
+import LeasesList from "./pages/LeasesList";
+
 const routes = [
   {
     path: "app",
     element: <DashboardLayout />,
     children: [
+      { path: "properties", element: <PropertiesList /> },
+      { path: "leases", element: <LeasesList /> },
+
       { path: "account", element: <Account /> },
       { path: "customers", element: <CustomerList /> },
       { path: "dashboard", element: <Dashboard /> },

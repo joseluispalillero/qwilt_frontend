@@ -11,13 +11,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import {
-  AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon,
-  Lock as LockIcon,
+  Briefcase as BriefcaseIcon,
+  DollarSign as DollarSignIcon,
+  Home as HomeIcon,
+  MapPin as MapPinIcon,
   Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
-  UserPlus as UserPlusIcon,
+  Star as StarIcon,
   Users as UsersIcon,
 } from "react-feather";
 import NavItem from "./NavItem";
@@ -31,53 +30,45 @@ const user = {
 const items = [
   {
     href: "/app/dashboard",
-    icon: BarChartIcon,
+    icon: HomeIcon,
     title: "Dashboard",
   },
   {
-    href: "/app/customers",
+    href: "/app/properties",
+    icon: MapPinIcon,
+    title: "Properties",
+  },
+  {
+    href: "/app/portfolio",
+    icon: BriefcaseIcon,
+    title: "Portfolio",
+  },
+  {
+    href: "/app/contacts",
     icon: UsersIcon,
-    title: "Customers",
+    title: "Contacts",
   },
   {
-    href: "/app/products",
-    icon: ShoppingBagIcon,
-    title: "Products",
+    href: "/app/leases",
+    icon: StarIcon,
+    title: "Leases",
   },
   {
-    href: "/app/account",
-    icon: UserIcon,
-    title: "Account",
+    href: "/app/financials",
+    icon: DollarSignIcon,
+    title: "Financials",
   },
   {
     href: "/app/settings",
     icon: SettingsIcon,
     title: "Settings",
-  },
-  {
-    href: "/login",
-    icon: LockIcon,
-    title: "Login",
-  },
-  {
-    href: "/register",
-    icon: UserPlusIcon,
-    title: "Register",
-  },
-  {
-    href: "/404",
-    icon: AlertCircleIcon,
-    title: "Error",
-  },
+  }
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
 
   useEffect(() => {
-    if (openMobile && onMobileClose) {
-      onMobileClose();
-    }
   }, [location.pathname]);
 
   const content = (
@@ -86,16 +77,14 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
-      }}
-    >
+      }}>
       <Box
         sx={{
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
           p: 2,
-        }}
-      >
+        }}>
         <Avatar
           component={RouterLink}
           src={user.avatar}
@@ -142,8 +131,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             sx: {
               width: 256,
             },
-          }}
-        >
+          }}>
           {content}
         </Drawer>
       </Hidden>
@@ -158,8 +146,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               top: 64,
               height: "calc(100% - 64px)",
             },
-          }}
-        >
+          }}>
           {content}
         </Drawer>
       </Hidden>
