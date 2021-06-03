@@ -1,5 +1,6 @@
 import React from "react";
 import IntroText from "./../IntroText";
+import Head from "./../Head";
 
 const Contacts = (props) => {
   const introText = {
@@ -10,6 +11,7 @@ const Contacts = (props) => {
 
   return (
     <>
+      <Head title="Financials" />
       <IntroText {...introText} />
     </>
   );

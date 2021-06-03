@@ -1,5 +1,6 @@
 import React from "react";
 import IntroText from "./../IntroText";
+import Head from "./../Head";
 
 const Leases = (props) => {
   const introText = {
@@ -10,6 +11,7 @@ const Leases = (props) => {
 
   return (
     <>
+      <Head title="Leases" />
       <IntroText {...introText} />
     </>
   );

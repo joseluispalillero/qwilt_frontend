@@ -1,5 +1,6 @@
 import React from "react";
 import IntroText from "./../IntroText";
+import Head from "./../Head";
 
 const Portfolio = (props) => {
   const introText = {
@@ -10,6 +11,7 @@ const Portfolio = (props) => {
 
   return (
     <>
+      <Head title="Portfolio" />
       <IntroText {...introText} />
     </>
   );
