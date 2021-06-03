@@ -1,17 +1,11 @@
 import React from "react";
-import IntroText from "./IntroText";
-import Head from "./Head";
-import Card from "./Card";
+import Page from "./Page";
 import Table from "./Table";
 
-const PageTable = ({ title, path, introText, dataTable }) => (
-  <>
-    <Head title={title} />
-    <IntroText {...introText} />
-    <Card path={path}>
-      <Table {...dataTable} />
-    </Card>
-  </>
+const PageTable = ({dataTable, ...data}) => (
+  <Page {...data}>
+    <Table {...dataTable} />
+  </Page>
 );
 
 export default PageTable;
