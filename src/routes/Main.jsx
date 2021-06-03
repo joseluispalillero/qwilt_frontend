@@ -19,7 +19,7 @@ const Main = ({ children }) => {
 
   return (
     <main className={classes.content}>
-      <Container maxWidth="md" className={classes.container}>
+      <Container maxWidth="lg" className={classes.container}>
         {children}
       </Container>
     </main>
