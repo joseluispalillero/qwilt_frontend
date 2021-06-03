@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import NavList from "./NavList";
-import { Drawer, IconButton, Divider } from "@material-ui/core";
+import {
+  Drawer,
+  IconButton,
+  Divider,
+  Typography,
+  Box,
+} from "@material-ui/core";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -16,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    padding: "0 8px",
+    padding: "0 18px",
     ...theme.mixins.toolbar,
   },
   drawerPaper: {
@@ -59,11 +65,21 @@ const Sidebar = () => {
       open={open}
     >
       {open ? (
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
+        <>
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Box pl={2} pb={2}>
+            <Typography variant="h4">
+              <Box fontWeight="fontWeightBold">FC Props</Box>
+            </Typography>
+            <Typography variant="body2">
+              <Box pt={1}>Username</Box>
+            </Typography>
+          </Box>
+        </>
       ) : (
         <div className={classes.toolbarIcon}>
           <IconButton
