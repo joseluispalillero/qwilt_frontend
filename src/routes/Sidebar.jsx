@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import NavList from "./NavList";
-import {
-  Drawer,
-  IconButton,
-  Divider,
-  Typography,
-  Box,
-} from "@material-ui/core";
+import { Drawer, IconButton, Divider } from "@material-ui/core";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import Logo from "./Logo";
 
 const drawerWidth = 280;
 
@@ -47,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar = () => {
+const Sidebar = ({ username = "username" }) => {
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const handleDrawerOpen = () => {
@@ -71,14 +66,7 @@ const Sidebar = () => {
               <ChevronLeftIcon />
             </IconButton>
           </div>
-          <Box pl={2} pb={2}>
-            <Typography variant="h4">
-              <Box fontWeight="fontWeightBold">FC Props</Box>
-            </Typography>
-            <Typography variant="body2">
-              <Box pt={1}>Username</Box>
-            </Typography>
-          </Box>
+          <Logo />
         </>
       ) : (
         <div className={classes.toolbarIcon}>

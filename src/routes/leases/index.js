@@ -1,8 +1,5 @@
 import React from "react";
-import IntroText from "./../IntroText";
-import Head from "./../Head";
-import Card from "./../Card";
-import Table from "./../Table";
+import PageTable from "./../PageTable";
 
 const Leases = (props) => {
   const introText = {
@@ -33,15 +30,13 @@ const Leases = (props) => {
       ],
     ],
   };
-  return (
-    <>
-      <Head title="Leases" />
-      <IntroText {...introText} />
-      <Card>
-        <Table {...dataTable} />
-      </Card>
-    </>
-  );
+  const data = {
+    introText,
+    dataTable,
+    title: "Leases",
+    path: "leases",
+  };
+  return <PageTable {...data} />;
 };
 
 export default Leases;

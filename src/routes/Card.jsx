@@ -1,6 +1,9 @@
 import React from "react";
-import { Card as MatCard } from "@material-ui/core";
+import { Link as LinkRouter } from "react-router-dom";
+import { Card as MatCard, Box, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+
 const useStyles = makeStyles({
   root: {
     minWidth: 100,
@@ -9,9 +12,18 @@ const useStyles = makeStyles({
   },
 });
 
-const Card = ({ children }) => {
+const Card = ({ children, path }) => {
   const classes = useStyles();
-  return <MatCard className={classes.root}>{children}</MatCard>;
+  return (
+    <MatCard className={classes.root} component={Box} display="flex" flexDirection="column">
+      <Box flexGrow={1}>{children}</Box>
+      <Box display="flex" justifyContent="flex-end">
+        <IconButton component={LinkRouter} to={`/${path}/new`}>
+          <AddCircleIcon fontSize="large"/>
+        </IconButton>
+      </Box>
+    </MatCard>
+  );
 };
 
 export default Card;

@@ -1,8 +1,5 @@
 import React from "react";
-import IntroText from "./../IntroText";
-import Head from "./../Head";
-import Card from "./../Card";
-import Table from "./../Table";
+import PageTable from "./../PageTable";
 
 const Financials = (props) => {
   const introText = {
@@ -13,16 +10,13 @@ const Financials = (props) => {
     headList: ["Money in", "Money out", "Bank accounts"],
     rows: [["$0.00 USD", "$0.00 USD", "4000-Bank account"]],
   };
-
-  return (
-    <>
-      <Head title="Financials" />
-      <IntroText {...introText} />
-      <Card>
-        <Table {...dataTable} />
-      </Card>
-    </>
-  );
+  const data = {
+    introText,
+    dataTable,
+    title: "Financials",
+    path: "financials",
+  };
+  return <PageTable {...data} />;
 };
 
 export default Financials;
