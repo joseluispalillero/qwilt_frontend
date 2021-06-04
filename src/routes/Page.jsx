@@ -3,11 +3,11 @@ import Head from "./Head";
 import IntroText from "./IntroText";
 import Card from "./Card";
 
-const Page = ({ title, introText, children, path }) => (
+const Page = ({ title, introText, children, newButton }) => (
   <>
     <Head title={title} />
     <IntroText {...introText} />
-    <Card path={path}>{children}</Card>
+    <Card newButton={newButton}>{children}</Card>
   </>
 );
 

@@ -34,7 +34,6 @@ const Leases = (props) => {
     introText,
     dataTable,
     title: "Leases",
-    path: "leases",
   };
   return <PageTable {...data} />;
 };

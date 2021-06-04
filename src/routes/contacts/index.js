@@ -31,7 +31,6 @@ const Contacts = (props) => {
     introText,
     dataTable,
     title: "Contacts",
-    path: "contacts",
   };
   return <PageTable {...data} />;
 };

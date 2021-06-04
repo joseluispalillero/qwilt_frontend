@@ -14,7 +14,6 @@ const Financials = (props) => {
     introText,
     dataTable,
     title: "Financials",
-    path: "financials",
   };
   return <PageTable {...data} />;
 };

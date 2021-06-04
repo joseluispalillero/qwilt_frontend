@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as LinkRouter } from "react-router-dom";
+import { Link as LinkRouter, useRouteMatch } from "react-router-dom";
 import { Card as MatCard, Box, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -12,8 +12,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Card = ({ children, path }) => {
+const Card = ({ children, newButton }) => {
   const classes = useStyles();
+  let match = useRouteMatch();
   return (
     <MatCard
       className={classes.root}
@@ -23,8 +24,8 @@ const Card = ({ children, path }) => {
     >
       <Box flexGrow={1}>{children}</Box>
       <Box display="flex" justifyContent="flex-end">
-        {path ? (
-          <IconButton component={LinkRouter} to={`/${path}/new`}>
+        {newButton ? (
+          <IconButton component={LinkRouter} to={`${match.path}/new`}>
             <AddCircleIcon fontSize="large" />
           </IconButton>
         ) : (

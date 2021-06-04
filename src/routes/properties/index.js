@@ -44,7 +44,6 @@ const Properties = (props) => {
     introText,
     dataTable,
     title: "Properties",
-    path: "properties",
   };
   return <PageTable {...data} />;
 };

@@ -32,7 +32,6 @@ const Portfolio = (props) => {
     introText,
     dataTable,
     title: "Portfolio",
-    path: "portfolio",
   };
   return <PageTable {...data} />;
 };
