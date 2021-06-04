@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const Logo = ({ username = "username" }) => (
   <Box pl={2} pb={2}>
     <Typography variant="h4">
-      <Box fontWeight="fontWeightBold">FC Props</Box>
+      <Box fontWeight="fontWeightBold">QWILT</Box>
     </Typography>
     <Box display="flex" alignItems="center">
       <Box pt={1}>
