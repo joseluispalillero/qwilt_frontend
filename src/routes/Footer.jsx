@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Typography, Link } from "@material-ui/core"
+import { Box, Typography, Link } from "@material-ui/core";
+import siteData from "./../siteData";
+
+const { brandName } = siteData;
 
 const Copyright = () => (
   <Typography variant="body2" color="textSecondary" align="center">
     {"Copyright © "}
     <Link color="inherit" href="https://material-ui.com/">
-      QWILT
+      {brandName}
     </Link>{" "}
     {new Date().getFullYear()}
     {"."}
