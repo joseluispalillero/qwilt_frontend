@@ -21,8 +21,8 @@ const routes = [
 const Routes = () => (
   <Dashboard>
     <Switch>
-      {routes.map(({path, component}) => (
-        <Route path={path}>
+      {routes.map(({path, component}, i) => (
+        <Route key={i} path={path}>
           {component}
         </Route>
       ))}

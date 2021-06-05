@@ -21,8 +21,8 @@ const navListItems = [
 
 const NavList = () => (
   <List>
-    {navListItems.map(({path, icon, name}) => (
-      <ListItem button component={LinkRouter} to={path}>
+    {navListItems.map(({path, icon, name}, i) => (
+      <ListItem key={i} button component={LinkRouter} to={path}>
         <ListItemIcon>
           <Box component={icon}/>
         </ListItemIcon>

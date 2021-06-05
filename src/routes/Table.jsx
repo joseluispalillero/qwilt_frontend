@@ -22,16 +22,16 @@ const Table = ({ headList = [], rows = [] }) => {
       <Tb className={classes.table} aria-label="table">
         <TableHead>
           <TableRow>
-            {headList.map((elem) => (
-              <TableCell>{elem}</TableCell>
+            {headList.map((elem, i) => (
+              <TableCell key={i}>{elem}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
             <TableRow key={i}>
-              {row.map((elem) => (
-                <TableCell>{elem}</TableCell>
+              {row.map((elem, i) => (
+                <TableCell key={i}>{elem}</TableCell>
               ))}
             </TableRow>
           ))}
