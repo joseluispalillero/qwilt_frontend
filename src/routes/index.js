@@ -1,3 +1,4 @@
+import { Box } from "@material-ui/core";
 import { Switch, Route } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Home from "./home";
@@ -7,27 +8,25 @@ import Financials from "./financials";
 import Leases from "./leases";
 import Portfolio from "./portfolio";
 
+const makeRouteElem = (component, path) => ({ component, path });
+
+const routes = [
+  makeRouteElem(Properties, "/properties"),
+  makeRouteElem(Contacts, "/contacts"),
+  makeRouteElem(Financials, "/financials"),
+  makeRouteElem(Leases, "/leases"),
+  makeRouteElem(Portfolio, "/portfolio"),
+  makeRouteElem(Home, "/"),
+];
+
 const Routes = () => (
   <Dashboard>
     <Switch>
-      <Route path="/properties">
-        <Properties />
-      </Route>
-      <Route path="/contacts">
-        <Contacts />
-      </Route>
-      <Route path="/financials">
-        <Financials />
-      </Route>
-      <Route path="/leases">
-        <Leases />
-      </Route>
-      <Route path="/portfolio">
-        <Portfolio />
-      </Route>
-      <Route path="/">
-        <Home />
-      </Route>
+      {routes.map((route) => (
+        <Route path={route.path}>
+          <Box component={route.component} />
+        </Route>
+      ))}
     </Switch>
   </Dashboard>
 );
