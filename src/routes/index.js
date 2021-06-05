@@ -1,4 +1,3 @@
-import { Box } from "@material-ui/core";
 import { Switch, Route } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Home from "./home";
@@ -22,9 +21,9 @@ const routes = [
 const Routes = () => (
   <Dashboard>
     <Switch>
-      {routes.map((route) => (
-        <Route path={route.path}>
-          <Box component={route.component} />
+      {routes.map(({path, component}) => (
+        <Route path={path}>
+          {component}
         </Route>
       ))}
     </Switch>
