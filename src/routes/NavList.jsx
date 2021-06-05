@@ -21,12 +21,12 @@ const navListItems = [
 
 const NavList = () => (
   <List>
-    {navListItems.map((navItem) => (
-      <ListItem button component={LinkRouter} to={navItem.path}>
+    {navListItems.map(({path, icon, name}) => (
+      <ListItem button component={LinkRouter} to={path}>
         <ListItemIcon>
-          <Box component={navItem.icon}/>
+          <Box component={icon}/>
         </ListItemIcon>
-        <ListItemText primary={navItem.name} />
+        <ListItemText primary={name} />
       </ListItem>
     ))}
   </List>
