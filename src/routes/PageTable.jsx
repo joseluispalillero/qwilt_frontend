@@ -1,23 +1,38 @@
 import React from "react";
-import { useRouteMatch, Switch, Route } from "react-router-dom";
+import { Box, IconButton } from "@material-ui/core";
+import {
+  Switch,
+  Route,
+  useRouteMatch,
+  Link as LinkRouter,
+} from "react-router-dom";
 import Page from "./Page";
 import Table from "./Table";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+
+const PageTableContainer = ({ children }) => <Box flexGrow={1}>{children}</Box>;
+
+const TableButtons = ({ path }) => (
+  <Box display="flex" justifyContent="flex-end">
+    <IconButton component={LinkRouter} to={`${path}/new`}>
+      <AddCircleIcon fontSize="large" />
+    </IconButton>
+  </Box>
+);
 
 const PageTable = ({ dataTable, ...data }) => {
-  let match = useRouteMatch();
-  console.log(match.path)
-  data = {
-    ...data,
-    newButton: true,
-  };
+  let path = useRouteMatch().path;
   return (
     <Page {...data}>
       <Switch>
-        <Route path={match.path}>
-          <Table {...dataTable} />
+        <Route exact path={path}>
+          <PageTableContainer>
+            <Table {...dataTable} />
+          </PageTableContainer>
+          <TableButtons path={path} />
         </Route>
-        <Route path={`${match.path}/new`}>
-          Hello new
+        <Route path={`${path}/new`}>
+          <PageTableContainer>Hello new</PageTableContainer>
         </Route>
       </Switch>
     </Page>
