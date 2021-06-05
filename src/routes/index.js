@@ -7,22 +7,22 @@ import Financials from "./financials";
 import Leases from "./leases";
 import Portfolio from "./portfolio";
 
-const makeRouteElem = (component, path) => ({ component, path });
+const makeRouteElem = (component, path, exact = false) => ({ component, path, exact });
 
 const routes = [
+  makeRouteElem(Home, "/", true),
   makeRouteElem(Properties, "/properties"),
   makeRouteElem(Contacts, "/contacts"),
   makeRouteElem(Financials, "/financials"),
   makeRouteElem(Leases, "/leases"),
   makeRouteElem(Portfolio, "/portfolio"),
-  makeRouteElem(Home, "/"),
 ];
 
 const Routes = () => (
   <Dashboard>
     <Switch>
-      {routes.map(({path, component}, i) => (
-        <Route key={i} path={path}>
+      {routes.map(({path, component, exact}, i) => (
+        <Route exact={exact} key={i} path={path}>
           {component}
         </Route>
       ))}
