@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, IconButton } from "@material-ui/core";
+import { Box, IconButton, Tooltip } from "@material-ui/core";
 import {
   Switch,
   Route,
@@ -14,9 +14,11 @@ const PageTableContainer = ({ children }) => <Box flexGrow={1}>{children}</Box>;
 
 const TableButtons = ({ path }) => (
   <Box display="flex" justifyContent="flex-end">
-    <IconButton component={LinkRouter} to={`${path}/new`}>
-      <AddCircleIcon fontSize="large" />
-    </IconButton>
+    <Tooltip title="New" placement="top" arrow>
+      <IconButton component={LinkRouter} to={`${path}/new`}>
+        <AddCircleIcon fontSize="large" />
+      </IconButton>
+    </Tooltip>
   </Box>
 );
 
