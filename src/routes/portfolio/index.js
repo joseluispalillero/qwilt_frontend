@@ -1,6 +1,6 @@
 import React from "react";
 import PageTable from "./../PageTable";
-import newPortfolio from "./new"
+import newPortfolio from "./new";
 
 const Portfolio = (props) => {
   const introText = {
@@ -33,7 +33,7 @@ const Portfolio = (props) => {
     introText,
     dataTable,
     title: "Portfolio",
-    form: newPortfolio
+    form: newPortfolio,
   };
   return <PageTable {...data} />;
 };

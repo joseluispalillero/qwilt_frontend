@@ -30,6 +30,17 @@ const Leases = (props) => {
         "04/01/2020",
       ],
     ],
+    moreMenuOpts: [
+      {
+        str: "Edit",
+      },
+      {
+        str: "Delete",
+      },
+      {
+        str: "Rent bump",
+      },
+    ],
   };
   const data = {
     introText,

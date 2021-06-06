@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import MoreMenuButton from "./MoreMenuButton";
 
 const useStyles = makeStyles({
   table: {
@@ -15,7 +16,21 @@ const useStyles = makeStyles({
   },
 });
 
-const Table = ({ headList = [], rows = [] }) => {
+const Table = ({
+  headList = [],
+  rows = [],
+  moreMenuOpts = [
+    {
+      str: "Edit",
+    },
+    {
+      str: "Delete",
+    },
+    {
+      str: "Email",
+    },
+  ],
+}) => {
   const classes = useStyles();
   return (
     <TableContainer>
@@ -25,6 +40,7 @@ const Table = ({ headList = [], rows = [] }) => {
             {headList.map((elem, i) => (
               <TableCell key={i}>{elem}</TableCell>
             ))}
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -33,6 +49,7 @@ const Table = ({ headList = [], rows = [] }) => {
               {row.map((elem, i) => (
                 <TableCell key={i}>{elem}</TableCell>
               ))}
+              <MoreMenuButton i={i} opts={moreMenuOpts} />
             </TableRow>
           ))}
         </TableBody>
