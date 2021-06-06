@@ -1,5 +1,6 @@
 import React from "react";
 import PageTable from "./../PageTable";
+import NewContact from "./new";
 
 const Contacts = (props) => {
   const introText = {
@@ -31,6 +32,7 @@ const Contacts = (props) => {
     introText,
     dataTable,
     title: "Contacts",
+    form: NewContact,
   };
   return <PageTable {...data} />;
 };

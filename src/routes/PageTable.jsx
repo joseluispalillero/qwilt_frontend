@@ -20,7 +20,7 @@ const TableButtons = ({ path }) => (
   </Box>
 );
 
-const PageTable = ({ dataTable, ...data }) => {
+const PageTable = ({ dataTable, form = "", ...data }) => {
   let path = useRouteMatch().path;
   return (
     <Page {...data}>
@@ -32,7 +32,7 @@ const PageTable = ({ dataTable, ...data }) => {
           <TableButtons path={path} />
         </Route>
         <Route path={`${path}/new`}>
-          <PageTableContainer>Hello new</PageTableContainer>
+          <PageTableContainer>{form}</PageTableContainer>
         </Route>
       </Switch>
     </Page>
