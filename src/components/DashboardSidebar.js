@@ -1,123 +1,109 @@
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useEffect } from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Drawer,
   Hidden,
   List,
-  Typography
-} from '@material-ui/core';
+  Typography,
+} from "@material-ui/core";
 import {
-  AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon,
-  Lock as LockIcon,
+  Briefcase as BriefcaseIcon,
+  DollarSign as DollarSignIcon,
+  Home as HomeIcon,
+  MapPin as MapPinIcon,
   Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
-  UserPlus as UserPlusIcon,
-  Users as UsersIcon
-} from 'react-feather';
-import NavItem from './NavItem';
+  Star as StarIcon,
+  Users as UsersIcon,
+} from "react-feather";
+import NavItem from "./NavItem";
+import { connect } from "react-redux";
 
 const user = {
-  avatar: '/static/images/avatars/avatar_5.png',
-  jobTitle: 'Customer 1',
-  name: 'Customer firstname lastname'
+  avatar: "/static/images/avatars/avatar_5.png",
+  jobTitle: "Customer 1",
+  name: "Customer firstname lastname",
 };
 
 const items = [
   {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
+    href: "/app/dashboard",
+    icon: HomeIcon,
+    title: "Dashboard",
   },
   {
-    href: '/app/customers',
+    href: "/app/portfolio",
+    icon: BriefcaseIcon,
+    title: "Portfolio",
+  },
+  {
+    href: "/app/properties",
+    icon: MapPinIcon,
+    title: "Properties",
+  },
+  {
+    href: "/app/contacts",
     icon: UsersIcon,
-    title: 'Customers'
+    title: "Contacts",
   },
   {
-    href: '/app/products',
-    icon: ShoppingBagIcon,
-    title: 'Products'
+    href: "/app/leases",
+    icon: StarIcon,
+    title: "Leases",
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account'
+    href: "/app/financials",
+    icon: DollarSignIcon,
+    title: "Financials",
   },
   {
-    href: '/app/settings',
+    href: "/app/settings",
     icon: SettingsIcon,
-    title: 'Settings'
+    title: "Settings",
   },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
 ];
 
-const DashboardSidebar = ({ onMobileClose, openMobile }) => {
+const DashboardSidebar = (props, { onMobileClose, openMobile }) => {
   const location = useLocation();
 
-  useEffect(() => {
-    if (openMobile && onMobileClose) {
-      onMobileClose();
-    }
-  }, [location.pathname]);
+  useEffect(() => {}, [location.pathname]);
 
   const content = (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%'
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
       <Box
         sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          p: 2
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          p: 2,
         }}
       >
         <Avatar
           component={RouterLink}
           src={user.avatar}
           sx={{
-            cursor: 'pointer',
+            cursor: "pointer",
             width: 64,
-            height: 64
+            height: 64,
           }}
           to="/app/account"
         />
-        <Typography
-          color="textPrimary"
-          variant="h5"
-        >
-          {user.name}
+        <Typography color="textPrimary" variant="h5">
+          {props.userLogged
+            ? props.userLogged.firstName + " " + props.userLogged.lastName
+            : ""}
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {user.jobTitle}
+        <Typography color="textSecondary" variant="body2">
+          {props.userLogged ? props.userLogged.role : ""}
         </Typography>
       </Box>
       <Divider />
@@ -147,8 +133,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           variant="temporary"
           PaperProps={{
             sx: {
-              width: 256
-            }
+              width: 256,
+            },
           }}
         >
           {content}
@@ -163,8 +149,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             sx: {
               width: 256,
               top: 64,
-              height: 'calc(100% - 64px)'
-            }
+              height: "calc(100% - 64px)",
+            },
           }}
         >
           {content}
@@ -176,12 +162,16 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
 
 DashboardSidebar.propTypes = {
   onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool
+  openMobile: PropTypes.bool,
 };
 
 DashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
-  openMobile: false
+  onMobileClose: () => {},
+  openMobile: false,
 };
 
-export default DashboardSidebar;
+const mapStateToProps = (state) => ({
+  userLogged: state.auth.userLogged,
+});
+
+export default connect(mapStateToProps, null)(DashboardSidebar);

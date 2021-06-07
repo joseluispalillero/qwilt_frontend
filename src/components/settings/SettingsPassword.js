@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -6,29 +6,26 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  TextField
-} from '@material-ui/core';
+  TextField,
+} from "@material-ui/core";
 
 const SettingsPassword = (props) => {
   const [values, setValues] = useState({
-    password: '',
-    confirm: ''
+    password: "",
+    confirm: "",
   });
 
   const handleChange = (event) => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   return (
     <form {...props}>
       <Card>
-        <CardHeader
-          subheader="Update password"
-          title="Password"
-        />
+        <CardHeader subheader="Update password" title="Password" />
         <Divider />
         <CardContent>
           <TextField
@@ -55,15 +52,12 @@ const SettingsPassword = (props) => {
         <Divider />
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            p: 2
+            display: "flex",
+            justifyContent: "flex-end",
+            p: 2,
           }}
         >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+          <Button color="primary" variant="contained">
             Update
           </Button>
         </Box>
