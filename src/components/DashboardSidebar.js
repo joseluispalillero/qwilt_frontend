@@ -54,11 +54,12 @@ const items = [
     icon: StarIcon,
     title: "Leases",
   },
+  /*,
   {
     href: "/app/financials",
     icon: DollarSignIcon,
     title: "Financials",
-  },
+  },*/
   {
     href: "/app/settings",
     icon: SettingsIcon,
