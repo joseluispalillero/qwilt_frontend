@@ -7,14 +7,18 @@ import {
     CardContent,
     Container,
     Link,
+    MenuItem,
+    Select,
     Typography,
-    TextField
+    TextField,
+    FormControl,
+    InputLabel
 } from "@material-ui/core";
-import { addPortfolio } from "../../redux/actions/portfolioAction";
 import { connect } from "react-redux";
-import {useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
+import {addLease} from "../../redux/actions/leaseAction";
 
 const LeaseAdd = (props) => {
     const navigate = useNavigate();
@@ -33,10 +37,10 @@ const LeaseAdd = (props) => {
                 <Container maxWidth={false}>
                     <Box {...props}>
                         <Breadcrumbs aria-label="breadcrumb">
-                            <Link color="inherit" href="/app/portfolio">
-                                Portfolios
+                            <Link color="inherit" onClick={()=> navigate("..")} href='#'>
+                                Leases
                             </Link>
-                            <Typography color="textPrimary">Add Portfolio</Typography>
+                            <Typography color="textPrimary">Add Lease</Typography>
                         </Breadcrumbs>
                         <Box
                             sx={{
@@ -50,20 +54,23 @@ const LeaseAdd = (props) => {
                                     <Container maxWidth="sm">
                                         <Formik
                                             initialValues={{
-                                                nickname: "",
-                                                capacityRatio: "",
-                                                files: "",
-                                                owner:  props.userLogged._id
+                                                status: "",
+                                                startDate: "",
+                                                endDate: ""
+                                                //,
+                                               // contactId:  0
                                             }}
                                             validationSchema={Yup.object().shape({
-                                                nickname: Yup.string()
+                                                status: Yup.string()
                                                     .max(255)
-                                                    .required("Nickname is required"),
-                                                capacityRatio: Yup.string().max(255).required("Capacity ratio is required")
+                                                    .required("Status is required"),                                               
+                                                startDate: Yup.string().required("Start Date is required"),
+                                                endDate: Yup.string().required("End Date is required")
+                                               // contactId: Yup.string().required("Contact is required")
                                             })}
                                             onSubmit={async (values) => {
-                                                await props.addPortfolio(values)
-                                                navigate("/app/portfolio", { replace: true });
+                                                await props.addLease(values)
+                                                navigate("/app/leases", { replace: true });
                                             }}>
                                             {({
                                                   errors,
@@ -77,33 +84,48 @@ const LeaseAdd = (props) => {
                                                 <form onSubmit={handleSubmit}>
                                                     <Box>
                                                         <Typography color="textPrimary" variant="h2">
-                                                            New Portfolio
+                                                            New Lease
                                                         </Typography>
+                                                        <br/>
                                                     </Box>
                                                     <TextField
-                                                        error={Boolean(touched.nickname && errors.nickname)}
+                                                        error={Boolean(touched.status && errors.status)}
                                                         fullWidth
-                                                        helperText={touched.nickname && errors.nickname}
-                                                        label="Nickname"
+                                                        helperText={touched.status && errors.status}
+                                                        label="Status"
                                                         margin="normal"
-                                                        name="nickname"
+                                                        name="status"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.nickname}
+                                                        value={values.status}
+                                                        variant="outlined"
+                                                    />
+                                                   
+                                                    <TextField
+                                                        error={Boolean(touched.startDate && errors.startDate)}
+                                                        fullWidth
+                                                        helperText={touched.startDate && errors.startDate}
+                                                        label="Start Date"
+                                                        margin="normal"
+                                                        name="startDate"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.startDate}
                                                         variant="outlined"
                                                     />
                                                     <TextField
-                                                        error={Boolean(touched.capacityRatio && errors.capacityRatio)}
+                                                        error={Boolean(touched.endDate && errors.endDate)}
                                                         fullWidth
-                                                        helperText={touched.lastName && errors.capacityRatio}
-                                                        label="Capacity Ratio"
+                                                        helperText={touched.endDate && errors.endDate}
+                                                        label="End Date"
                                                         margin="normal"
-                                                        name="capacityRatio"
+                                                        name="endDate"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.capacityRatio}
+                                                        value={values.endDate}
                                                         variant="outlined"
                                                     />
+
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -137,8 +159,7 @@ const LeaseAdd = (props) => {
 };
 
 const mapStateToProps = state => ({
-    properties: state.property.properties,
-    leases: state.lease.leases,
+   // contacts: state.contacty.contacts,
     userLogged: state.auth.userLogged,
 })
-export default connect(mapStateToProps, {addPortfolio})(LeaseAdd);
+export default connect(mapStateToProps, {addLease})(LeaseAdd);

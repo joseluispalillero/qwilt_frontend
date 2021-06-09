@@ -31,12 +31,12 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>status</TableCell>
-                  <TableCell>startDate</TableCell>
-                  <TableCell>endDate</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Start Date</TableCell>
+                  <TableCell>End Date</TableCell> 
  
-                  <TableCell>createdAt date</TableCell>
-                  <TableCell>updatedAt date</TableCell>
+                  <TableCell>Created Date</TableCell>
+                  <TableCell>Updateda Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
