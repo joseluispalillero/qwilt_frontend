@@ -17,13 +17,19 @@ import {
   Typography,
 } from "@material-ui/core";
 import {useNavigate} from "react-router-dom";
+import {removeLease} from "../../redux/actions/leaseAction";
 import {connect} from "react-redux";
 
 
 
-const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
+const LeasesListResults = ({   leases,contacts, userLogged, removeLease,...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectLease, setSelectLease] = useState({
+    status: ''
+  });
+
   const navigate = useNavigate();
 
   const handleLimitChange = (event) => {
@@ -36,6 +42,20 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
 
   const handleEdit = (lease) => {
     navigate("edit/" + lease._id)
+  }
+
+  const handleDelete = (lease) => {
+    setOpenDelete(true);
+    setSelectLease(lease)
+  }
+
+  const handleDeleteClose = () => {
+    setOpenDelete(false);
+  };
+
+  const deleteItem = async () => {
+    await removeLease(selectLease._id)
+    handleDeleteClose()
   }
 
   return (
@@ -78,6 +98,7 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
                       </TableCell>
                       <TableCell>
                         <Button onClick={()=> handleEdit(lease)}>Edit</Button>
+                        <Button color="secondary" onClick={()=> handleDelete(lease)}>Delete</Button>
                       </TableCell>
                     </TableRow>
                 )): null}
@@ -94,8 +115,32 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
             rowsPerPage={limit}
             rowsPerPageOptions={[5, 10, 25]}
         />
+        <Dialog
+          open={openDelete}
+          onClose={handleDeleteClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">Delete confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to delete selected lease ({selectLease.status})?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={deleteItem} color="secondary">
+            Delete
+          </Button>
+          <Button onClick={handleDeleteClose} color="primary" autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Card>
   );
 };
 
-export default LeasesListResults;
+LeasesListResults.propTypes = {
+  leases: PropTypes.array.isRequired,
+};
+
+export default connect(null, {removeLease})(LeasesListResults);

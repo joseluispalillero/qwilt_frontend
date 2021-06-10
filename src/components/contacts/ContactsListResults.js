@@ -17,10 +17,16 @@ import {
   Typography,
 } from "@material-ui/core";
 import {useNavigate} from "react-router-dom";
+import {removeContact} from "../../redux/actions/contactAction";
+import {connect} from "react-redux";
 
-const ContactsListResults = ({  properties, contacts, userLogged, ...rest }) => {
+const ContactsListResults = ({  properties, contacts, userLogged, removeContact, ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectContact, setSelectContact] = useState({
+    name: ''
+  });
   const navigate = useNavigate();
 
   const handleLimitChange = (event) => {
@@ -33,6 +39,20 @@ const ContactsListResults = ({  properties, contacts, userLogged, ...rest }) => 
 
   const handleEdit = (contact) => {
     navigate("edit/" + contact._id)
+  }
+
+  const handleDelete = (contact) => {
+    setOpenDelete(true);
+    setSelectContact(contact)
+  }
+
+  const handleDeleteClose = () => {
+    setOpenDelete(false);
+  };
+
+  const deleteItem = async () => {
+    await removeContact(selectContact._id)
+    handleDeleteClose()
   }
 
   return (
@@ -68,6 +88,7 @@ const ContactsListResults = ({  properties, contacts, userLogged, ...rest }) => 
                       </TableCell>
                       <TableCell>
                         <Button onClick={()=> handleEdit(contact)}>Edit</Button>
+                        <Button color="secondary" onClick={()=> handleDelete(contact)}>Delete</Button>
                       </TableCell>
                     </TableRow>
                 )): null}
@@ -84,8 +105,32 @@ const ContactsListResults = ({  properties, contacts, userLogged, ...rest }) => 
             rowsPerPage={limit}
             rowsPerPageOptions={[5, 10, 25]}
         />
+        <Dialog
+          open={openDelete}
+          onClose={handleDeleteClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">Delete confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to delete selected Contact ({selectContact.name})?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={deleteItem} color="secondary">
+            Delete
+          </Button>
+          <Button onClick={handleDeleteClose} color="primary" autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Card>
   );
 };
 
-export default ContactsListResults;
+ContactsListResults.propTypes = {
+  contacts: PropTypes.array.isRequired,
+};
+
+export default connect(null, {removeContact})(ContactsListResults);
