@@ -67,7 +67,11 @@ class Services {
 
   //Leases
   getLeases() {
-    return this.service.get("/leases/all")
+    return this.service.get("/leases/all");
+  }
+
+  addLease(data) {
+    return this.service.post("/leases/create", data);
   }
 
   //contacts

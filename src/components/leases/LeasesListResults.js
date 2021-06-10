@@ -34,7 +34,7 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
                   <TableCell>Status</TableCell>
                   <TableCell>Start Date</TableCell>
                   <TableCell>End Date</TableCell> 
- 
+                  <TableCell>Contact</TableCell> 
                   <TableCell>Created Date</TableCell>
                   <TableCell>Updateda Date</TableCell>
                 </TableRow>
@@ -51,7 +51,10 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
                       <TableCell>
                         {moment(lease.endDate).format("DD/MM/YYYY")}
                       </TableCell>
-
+                      <TableCell>{lease.contactId?
+                          (contacts.filter(contact=> contact._id === lease.contactId)[0]?
+                          contacts.filter(contact=> contact._id === lease.contactId)[0].name : '') : ''}
+                              </TableCell>
                       <TableCell>
                         {moment(lease.createdAt).format("DD/MM/YYYY")}
                       </TableCell>

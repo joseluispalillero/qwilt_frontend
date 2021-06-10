@@ -56,17 +56,16 @@ const LeaseAdd = (props) => {
                                             initialValues={{
                                                 status: "",
                                                 startDate: "",
-                                                endDate: ""
-                                                //,
-                                               // contactId:  0
+                                                endDate: "",
+                                                contactId:  0
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 status: Yup.string()
                                                     .max(255)
                                                     .required("Status is required"),                                               
                                                 startDate: Yup.string().required("Start Date is required"),
-                                                endDate: Yup.string().required("End Date is required")
-                                               // contactId: Yup.string().required("Contact is required")
+                                                endDate: Yup.string().required("End Date is required"),
+                                                contactId: Yup.string().required("Contact is required")
                                             })}
                                             onSubmit={async (values) => {
                                                 await props.addLease(values)
@@ -125,7 +124,22 @@ const LeaseAdd = (props) => {
                                                         value={values.endDate}
                                                         variant="outlined"
                                                     />
-
+                                                    <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="contact">Contact</InputLabel>
+                                                        <Select
+                                                            margin="normal"
+                                                            label="Contacts"
+                                                            helperText={touched.contactId && errors.contactId}
+                                                            fullWidth
+                                                            name="contactId"
+                                                            labelId="contact"
+                                                            value={values.contactId}
+                                                            onChange={handleChange}>
+                                                            {props.contacts? props.contacts.map((contact) => (
+                                                                <MenuItem value={contact._id}>{contact.name}</MenuItem>
+                                                            )): null}
+                                                        </Select>
+                                                    </FormControl>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -159,7 +173,7 @@ const LeaseAdd = (props) => {
 };
 
 const mapStateToProps = state => ({
-   // contacts: state.contacty.contacts,
+    contacts: state.contact.contacts,
     userLogged: state.auth.userLogged,
 })
 export default connect(mapStateToProps, {addLease})(LeaseAdd);
