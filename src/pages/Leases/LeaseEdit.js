@@ -6,9 +6,13 @@ import {
     Breadcrumbs,
     Card,
     CardContent,
+    MenuItem,
+    Select,
     Container,
     Link,
     Typography,
+    FormControl,
+    InputLabel,
     TextField
 } from "@material-ui/core";
 import { updateLease } from "../../redux/actions/leaseAction";
@@ -66,14 +70,16 @@ const LeaseEdit = (props) => {
                                             initialValues={{
                                                 status: lease.status,
                                                 startDate: lease.startDate,
-                                                endDate: lease.endDate
+                                                endDate: lease.endDate,
+                                                contactId : lease.contactId
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 status: Yup.string()
                                                 .max(255)
                                                 .required("Status is required"),                                               
                                                 startDate: Yup.string().required("Start Date is required"),
-                                                endDate: Yup.string().required("End Date is required")
+                                                endDate: Yup.string().required("End Date is required"),
+                                                contactId: Yup.string().required("Contact is required")
                                             })}
                                             onSubmit={async (values) => {
                                                 await props.updateLease(id, values)
@@ -131,6 +137,22 @@ const LeaseEdit = (props) => {
                                                         value={values.endDate}
                                                         variant="outlined"
                                                     />
+                                                    <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="contact">Contact</InputLabel>
+                                                        <Select
+                                                            margin="normal"
+                                                            label="Contacts"
+                                                            helperText={touched.contactId && errors.contactId}
+                                                            fullWidth
+                                                            name="contactId"
+                                                            labelId="contact"
+                                                            value={values.contactId}
+                                                            onChange={handleChange}>
+                                                            {props.contacts? props.contacts.map((contact) => (
+                                                                <MenuItem value={contact._id}>{contact.name}</MenuItem>
+                                                            )): null}
+                                                        </Select>
+                                                    </FormControl>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -165,6 +187,7 @@ const LeaseEdit = (props) => {
 
 const mapStateToProps = state => ({
     leases: state.lease.leases,
+    contacts: state.contact.contacts,
     userLogged: state.auth.userLogged,
 })
 export default connect(mapStateToProps, {updateLease})(LeaseEdit);
