@@ -7,7 +7,6 @@ import { getContacts } from "../../redux/actions/contactAction";
 import { connect } from "react-redux";
 import {useEffect} from "react";
 
-
 const LeasesList = (props) => {
 
     useEffect(() => {

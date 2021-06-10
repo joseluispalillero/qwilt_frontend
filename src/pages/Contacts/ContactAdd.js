@@ -22,7 +22,6 @@ import {addContact} from "../../redux/actions/contactAction";
 
 const ContactAdd = (props) => {
     const navigate = useNavigate();
-    console.log(props.userLogged)
     return (
         <>
             <Helmet>
@@ -110,7 +109,7 @@ const ContactAdd = (props) => {
                                                             fullWidth
                                                             name="propertyId"
                                                             labelId="property"
-                                                            value={values.contactId}
+                                                            value={values.propertyId}
                                                             onChange={handleChange}>
                                                             {props.properties? props.properties.map((property) => (
                                                                 <MenuItem value={property._id}>{property.name}</MenuItem>

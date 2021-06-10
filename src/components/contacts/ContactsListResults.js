@@ -17,7 +17,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import {useNavigate} from "react-router-dom";
-//import {connect} from "react-redux";
 
 const ContactsListResults = ({  properties, contacts, userLogged, ...rest }) => {
   const [limit, setLimit] = useState(10);

@@ -8,8 +8,7 @@ import {
     CardContent,
     Container,
     Link,
-    MenuItem,
-    Select,
+    NativeSelect,
     Typography,
     TextField,
     FormControl,
@@ -22,7 +21,6 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
 
-
 const PropertyEdit = (props) => {
     const navigate = useNavigate();
     const [property, setProperty] = useState({});
@@ -33,7 +31,6 @@ const PropertyEdit = (props) => {
     }, []);
 
     const fetchDataEdit = () => {
-        console.log(props.properties)
         setProperty(props.properties.filter(property => property._id === id )[0])
     };
 
@@ -51,8 +48,8 @@ const PropertyEdit = (props) => {
                 <Container maxWidth={false}>
                     <Box {...props}>
                         <Breadcrumbs aria-label="breadcrumb">
-                            <Link color="inherit" href="/app/leases">
-                                Property
+                            <Link color="inherit" onClick={()=> navigate("/app/properties", {replace: true})} href='#'>
+                                Properties
                             </Link>
                             <Typography color="textPrimary">Edit Property ({property.name})</Typography>
                         </Breadcrumbs>
@@ -73,7 +70,7 @@ const PropertyEdit = (props) => {
                                                 location: property.location,
                                                 description: property.description,
                                                 targetRent:  property.targetRent,
-                                                currentRent : property.currentRent
+                                                portfolioId: property.portfolioId
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -82,11 +79,13 @@ const PropertyEdit = (props) => {
                                                 location: Yup.string().max(2000).required("Location is required"),
                                                 targetRent: Yup.string().required("Target Rent is required"),
                                                 currentRent: Yup.string().required("Current Rent is required"),
+                                                portfolioId: Yup.string().required("Portfolio is required"),
                                                 description: Yup.string().max(2000).required("Description is required")
                                             })}
                                             onSubmit={async (values) => {
+
                                                 await props.updateProperty(id, values)
-                                                navigate("/app/properties", { replace: true });
+                                                navigate("/app/properties");
                                             }}>
                                             {({
                                                   errors,
@@ -103,18 +102,21 @@ const PropertyEdit = (props) => {
                                                             Edit Property
                                                         </Typography>
                                                     </Box>
-                                                    <TextField
-                                                        error={Boolean(touched.description && errors.description)}
-                                                        fullWidth
-                                                        helperText={touched.description && errors.description}
-                                                        label="Description"
-                                                        margin="normal"
-                                                        name="description"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        value={values.description}
-                                                        variant="outlined"
-                                                    />
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="portfolio">Portfolio</InputLabel>
+                                                        <NativeSelect
+                                                            label="Portfolio"
+                                                            helperText={touched.portfolioId && errors.portfolioId}
+                                                            fullWidth
+                                                            name="portfolioId"
+                                                            labelId="portfolio"
+                                                            value={values.portfolioId}
+                                                            onChange={handleChange}>
+                                                            {props.portfolios? props.portfolios.map((portfolio) => (
+                                                                <option value={portfolio._id}>{portfolio.nickname}</option>
+                                                            )): null}
+                                                        </NativeSelect>
+                                                    </FormControl>
                                                     <TextField
                                                         error={Boolean(touched.name && errors.name)}
                                                         fullWidth
@@ -125,6 +127,18 @@ const PropertyEdit = (props) => {
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                         value={values.name}
+                                                        variant="outlined"
+                                                    />
+                                                    <TextField
+                                                        error={Boolean(touched.description && errors.description)}
+                                                        fullWidth
+                                                        helperText={touched.description && errors.description}
+                                                        label="Description"
+                                                        margin="normal"
+                                                        name="description"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.description}
                                                         variant="outlined"
                                                     />
                                                     <TextField
@@ -199,6 +213,7 @@ const PropertyEdit = (props) => {
 
 const mapStateToProps = state => ({
     properties: state.property.properties,
+    portfolios: state.portfolio.portfolios,
     userLogged: state.auth.userLogged,
 })
 export default connect(mapStateToProps, {updateProperty})(PropertyEdit);

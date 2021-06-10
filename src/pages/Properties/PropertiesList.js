@@ -56,4 +56,4 @@ const mapStateToProps = state => ({
     portfolios: state.portfolio.portfolios,
     userLogged: state.auth.userLogged,
 })
-export default connect(mapStateToProps, {getProperties, getPortfolios})(PropertiesList); 
+export default connect(mapStateToProps, {getProperties, getPortfolios})(PropertiesList);

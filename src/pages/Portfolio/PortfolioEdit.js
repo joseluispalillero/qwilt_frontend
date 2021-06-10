@@ -28,7 +28,6 @@ const PortfolioEdit = (props) => {
     }, []);
 
     const fetchDataEdit = () => {
-        console.log(props.portfolios)
         setPortfolio(props.portfolios.filter(portfolio => portfolio._id === id )[0])
     };
 

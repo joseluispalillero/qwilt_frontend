@@ -9,11 +9,11 @@ import {
     Container,
     Link,
     MenuItem,
-    Select,
     Typography,
     TextField,
     FormControl,
-    InputLabel
+    InputLabel,
+    NativeSelect
 } from "@material-ui/core";
 import { updateContact } from "../../redux/actions/contactAction";
 import { connect } from "react-redux";
@@ -33,7 +33,6 @@ const ContactEdit = (props) => {
     }, []);
 
     const fetchDataEdit = () => {
-        console.log(props.contacts)
         setContact(props.contacts.filter(contact => contact._id === id )[0])
     };
 
@@ -51,8 +50,8 @@ const ContactEdit = (props) => {
                 <Container maxWidth={false}>
                     <Box {...props}>
                         <Breadcrumbs aria-label="breadcrumb">
-                            <Link color="inherit" href="/app/leases">
-                                Leases
+                            <Link color="inherit" onClick={()=> navigate("/app/contacts", {replace: true})} href='#'>
+                                Contacts
                             </Link>
                             <Typography color="textPrimary">Edit Contact ({contact.name})</Typography>
                         </Breadcrumbs>
@@ -72,7 +71,8 @@ const ContactEdit = (props) => {
                                                 name: contact.name,
                                                 email: contact.email,
                                                 phone: contact.phone,
-                                                type: contact.type
+                                                type: contact.type,
+                                                propertyId: contact.propertyId
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -80,11 +80,12 @@ const ContactEdit = (props) => {
                                                     .required("Name is required"),
                                                 email: Yup.string().max(255).email().required("email is required"),
                                                 phone: Yup.string().required("Phone is required"),
+                                                propertyId: Yup.string().required("Property is required"),
                                                 type: Yup.string().required("Type is required")
                                             })}
                                             onSubmit={async (values) => {
                                                 await props.updateContact(id, values)
-                                                navigate("/app/contacts", { replace: true });
+                                                navigate("/app/contacts");
                                             }}>
                                             {({
                                                   errors,
@@ -113,6 +114,23 @@ const ContactEdit = (props) => {
                                                         value={values.name}
                                                         variant="outlined"
                                                     />
+                                                    <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="property">Properties</InputLabel>
+                                                        <NativeSelect
+                                                            margin="normal"
+                                                            label="Properties"
+                                                            helperText={touched.propertyId && errors.propertyId}
+                                                            fullWidth
+                                                            name="property"
+                                                            labelId="property"
+                                                            defaultValue={values.propertyId}
+                                                            value={values.propertyId}
+                                                            onChange={handleChange}>
+                                                            {props.properties? props.properties.map((property) => (
+                                                                <option value={property._id}>{property.name}</option>
+                                                            )): null}
+                                                        </NativeSelect>
+                                                    </FormControl>
                                                    <TextField
                                                         type="email"
                                                         error={Boolean(touched.email && errors.email)}
@@ -140,21 +158,22 @@ const ContactEdit = (props) => {
                                                         variant="outlined"
                                                     />
                                                     <FormControl fullWidth margin="normal">
-                                                        <InputLabel id="tyoe">Type</InputLabel>
-                                                        <Select
+                                                        <InputLabel id="type">Type</InputLabel>
+                                                        <NativeSelect
                                                             margin="normal"
                                                             label="Type"
                                                             helperText={touched.type && errors.type}
                                                             fullWidth
                                                             name="type"
                                                             labelId="type"
+                                                            defaultValue={values.type}
                                                             value={values.type}
                                                             onChange={handleChange}>
-                                                            <MenuItem value="Landlord">Landlord</MenuItem>
-                                                            <MenuItem value="Property Manager">Property Manager</MenuItem>
-                                                            <MenuItem value="Tenant">Tenant</MenuItem>
-                                                            <MenuItem value="Interested">Interested</MenuItem>
-                                                        </Select>
+                                                            <option value="Landlord">Landlord</option>
+                                                            <option value="Property Manager">Property Manager</option>
+                                                            <option value="Tenant">Tenant</option>
+                                                            <option value="Interested">Interested</option>
+                                                        </NativeSelect>
                                                     </FormControl>
                                                     <Box
                                                         sx={{
@@ -190,6 +209,7 @@ const ContactEdit = (props) => {
 
 const mapStateToProps = state => ({
     contacts: state.contact.contacts,
+    properties: state.property.properties,
     userLogged: state.auth.userLogged,
 })
 export default connect(mapStateToProps, {updateContact})(ContactEdit);

@@ -35,6 +35,11 @@ class Services {
     );
   }
 
+  //files
+  upload(file) {
+    return this.service.post("/upload", file)
+  }
+
   signup(data) {
     return this.service.post("/auth/signup", data);
   }
