@@ -1,20 +1,28 @@
-import { useState} from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import moment from "moment";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Box,
-  Card,
+  Button,
+  Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Menu,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
+  Typography,
 } from "@material-ui/core";
+import {useNavigate} from "react-router-dom";
+import {connect} from "react-redux";
 
 const PropertiesListResults = ( {  properties, portfolios,  userLogged, ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const navigate = useNavigate();
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -23,6 +31,10 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, ...rest 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+
+  const handleEdit = (property) => {
+    navigate("edit/" + property._id)
+  }
 
   return (
       <Card {...rest}>
@@ -39,6 +51,7 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, ...rest 
                   <TableCell>Current Rent</TableCell>
                   <TableCell>Portfolio</TableCell>
                   <TableCell>Registration date</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -57,6 +70,9 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, ...rest 
                               portfolios.filter(portfolio=> portfolio._id === property.portfolioId)[0].nickname : '') : ''}</TableCell>
                       <TableCell>
                         {moment(property.createdAt).format("DD/MM/YYYY")}
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={()=> handleEdit(property)}>Edit</Button>
                       </TableCell>
                     </TableRow>
                 )): null}

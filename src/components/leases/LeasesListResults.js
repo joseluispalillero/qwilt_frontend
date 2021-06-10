@@ -1,20 +1,30 @@
-import {useState} from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import moment from "moment";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Box,
-  Card,
+  Button,
+  Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Menu,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
-  TableRow
+  TableRow,
+  Typography,
 } from "@material-ui/core";
+import {useNavigate} from "react-router-dom";
+import {connect} from "react-redux";
+
+
 
 const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const navigate = useNavigate();
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -23,6 +33,10 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+
+  const handleEdit = (lease) => {
+    navigate("edit/" + lease._id)
+  }
 
   return (
       <Card {...rest}>
@@ -37,6 +51,7 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
                   <TableCell>Contact</TableCell> 
                   <TableCell>Created Date</TableCell>
                   <TableCell>Updateda Date</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -60,6 +75,9 @@ const LeasesListResults = ({   leases,contacts, userLogged, ...rest }) => {
                       </TableCell>
                       <TableCell>
                         {moment(lease.updatedAt).format("DD/MM/YYYY")}
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={()=> handleEdit(lease)}>Edit</Button>
                       </TableCell>
                     </TableRow>
                 )): null}

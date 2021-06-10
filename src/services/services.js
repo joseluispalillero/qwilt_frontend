@@ -73,6 +73,10 @@ class Services {
     return this.service.post("/properties/create", data);
   }
 
+  updateProperty(id, data) {
+    return this.service.patch("/properties/update/" + id , data);
+  }
+
   //Leases
   getLeases() {
     return this.service.get("/leases/all");
@@ -82,12 +86,21 @@ class Services {
     return this.service.post("/leases/create", data);
   }
 
+  updateLease(id, data) {
+    return this.service.patch("/leases/update/" + id , data);
+  }
+
   //contacts
   getContacts() {
     return this.service.get("/contacts/all")
   }
+  
   addContact(data) {
     return this.service.post("/contacts/create", data);
+  }
+
+  updateContact(id, data) {
+    return this.service.patch("/contacts/update/" + id , data);
   }
 
   //files

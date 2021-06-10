@@ -8,19 +8,24 @@ import {
     CardContent,
     Container,
     Link,
+    MenuItem,
+    Select,
     Typography,
-    TextField
+    TextField,
+    FormControl,
+    InputLabel
 } from "@material-ui/core";
-import { updatePortfolio } from "../../redux/actions/portfolioAction";
+import { updateContact } from "../../redux/actions/contactAction";
 import { connect } from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
 
-const PortfolioEdit = (props) => {
+
+const ContactEdit = (props) => {
     const navigate = useNavigate();
-    const [portfolio, setPortfolio] = useState({});
+    const [contact, setContact] = useState({});
     const { id } = useParams();
 
     useEffect(() => {
@@ -28,14 +33,14 @@ const PortfolioEdit = (props) => {
     }, []);
 
     const fetchDataEdit = () => {
-        console.log(props.portfolios)
-        setPortfolio(props.portfolios.filter(portfolio => portfolio._id === id )[0])
+        console.log(props.contacts)
+        setContact(props.contacts.filter(contact => contact._id === id )[0])
     };
 
     return (
         <>
             <Helmet>
-                <title>Edit Portfolio</title>
+                <title>Edit Contact</title>
             </Helmet>
             <Box
                 sx={{
@@ -46,10 +51,10 @@ const PortfolioEdit = (props) => {
                 <Container maxWidth={false}>
                     <Box {...props}>
                         <Breadcrumbs aria-label="breadcrumb">
-                            <Link color="inherit" href="/app/portfolio">
-                                Portfolios
+                            <Link color="inherit" href="/app/leases">
+                                Leases
                             </Link>
-                            <Typography color="textPrimary">Edit Portfolio ({portfolio.nickname})</Typography>
+                            <Typography color="textPrimary">Edit Contact ({contact.name})</Typography>
                         </Breadcrumbs>
                         <Box
                             sx={{
@@ -64,20 +69,22 @@ const PortfolioEdit = (props) => {
                                         <Formik
                                             enableReinitialize={true}
                                             initialValues={{
-                                                nickname: portfolio.nickname,
-                                                capacityRatio: portfolio.capacityRatio,
-                                                files: "",
-                                                owner:  props.userLogged._id
+                                                name: contact.name,
+                                                email: contact.email,
+                                                phone: contact.phone,
+                                                type: contact.type
                                             }}
                                             validationSchema={Yup.object().shape({
-                                                nickname: Yup.string()
+                                                name: Yup.string()
                                                     .max(255)
-                                                    .required("Nickname is required"),
-                                                capacityRatio: Yup.string().max(255).required("Capacity ratio is required")
+                                                    .required("Name is required"),
+                                                email: Yup.string().max(255).email().required("email is required"),
+                                                phone: Yup.string().required("Phone is required"),
+                                                type: Yup.string().required("Type is required")
                                             })}
                                             onSubmit={async (values) => {
-                                                await props.updatePortfolio(id, values)
-                                                navigate("/app/portfolio", { replace: true });
+                                                await props.updateContact(id, values)
+                                                navigate("/app/contacts", { replace: true });
                                             }}>
                                             {({
                                                   errors,
@@ -91,33 +98,64 @@ const PortfolioEdit = (props) => {
                                                 <form onSubmit={handleSubmit}>
                                                     <Box>
                                                         <Typography color="textPrimary" variant="h2">
-                                                            Edit Portfolio
+                                                            Edit Contact
                                                         </Typography>
                                                     </Box>
                                                     <TextField
-                                                        error={Boolean(touched.nickname && errors.nickname)}
+                                                        error={Boolean(touched.name && errors.name)}
                                                         fullWidth
-                                                        helperText={touched.nickname && errors.nickname}
-                                                        label="Nickname"
+                                                        helperText={touched.name && errors.name}
+                                                        label="Name"
                                                         margin="normal"
-                                                        name="nickname"
+                                                        name="name"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.nickname}
+                                                        value={values.name}
+                                                        variant="outlined"
+                                                    />
+                                                   <TextField
+                                                        type="email"
+                                                        error={Boolean(touched.email && errors.email)}
+                                                        fullWidth
+                                                        helperText={touched.email && errors.email}
+                                                        label="Email"
+                                                        margin="normal"
+                                                        name="email"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.email}
                                                         variant="outlined"
                                                     />
                                                     <TextField
-                                                        error={Boolean(touched.capacityRatio && errors.capacityRatio)}
+                                                        type="tel"
+                                                        error={Boolean(touched.phone && errors.phone)}
                                                         fullWidth
-                                                        helperText={touched.lastName && errors.capacityRatio}
-                                                        label="Capacity Ratio"
+                                                        helperText={touched.phone && errors.phone}
+                                                        label="Phone"
                                                         margin="normal"
-                                                        name="capacityRatio"
+                                                        name="phone"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.capacityRatio}
+                                                        value={values.phone}
                                                         variant="outlined"
                                                     />
+                                                    <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="tyoe">Type</InputLabel>
+                                                        <Select
+                                                            margin="normal"
+                                                            label="Type"
+                                                            helperText={touched.type && errors.type}
+                                                            fullWidth
+                                                            name="type"
+                                                            labelId="type"
+                                                            value={values.type}
+                                                            onChange={handleChange}>
+                                                            <MenuItem value="Landlord">Landlord</MenuItem>
+                                                            <MenuItem value="Property Manager">Property Manager</MenuItem>
+                                                            <MenuItem value="Tenant">Tenant</MenuItem>
+                                                            <MenuItem value="Interested">Interested</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -151,7 +189,7 @@ const PortfolioEdit = (props) => {
 };
 
 const mapStateToProps = state => ({
-    portfolios: state.portfolio.portfolios,
+    contacts: state.contact.contacts,
     userLogged: state.auth.userLogged,
 })
-export default connect(mapStateToProps, {updatePortfolio})(PortfolioEdit);
+export default connect(mapStateToProps, {updateContact})(ContactEdit);

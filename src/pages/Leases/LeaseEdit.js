@@ -11,16 +11,16 @@ import {
     Typography,
     TextField
 } from "@material-ui/core";
-import { updatePortfolio } from "../../redux/actions/portfolioAction";
+import { updateLease } from "../../redux/actions/leaseAction";
 import { connect } from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
 
-const PortfolioEdit = (props) => {
+const LeaseEdit = (props) => {
     const navigate = useNavigate();
-    const [portfolio, setPortfolio] = useState({});
+    const [lease, setLease] = useState({});
     const { id } = useParams();
 
     useEffect(() => {
@@ -28,14 +28,14 @@ const PortfolioEdit = (props) => {
     }, []);
 
     const fetchDataEdit = () => {
-        console.log(props.portfolios)
-        setPortfolio(props.portfolios.filter(portfolio => portfolio._id === id )[0])
+        console.log(props.leases)
+        setLease(props.leases.filter(lease => lease._id === id )[0])
     };
 
     return (
         <>
             <Helmet>
-                <title>Edit Portfolio</title>
+                <title>Edit Lease</title>
             </Helmet>
             <Box
                 sx={{
@@ -46,10 +46,10 @@ const PortfolioEdit = (props) => {
                 <Container maxWidth={false}>
                     <Box {...props}>
                         <Breadcrumbs aria-label="breadcrumb">
-                            <Link color="inherit" href="/app/portfolio">
-                                Portfolios
+                            <Link color="inherit" href="/app/leases">
+                                Leases
                             </Link>
-                            <Typography color="textPrimary">Edit Portfolio ({portfolio.nickname})</Typography>
+                            <Typography color="textPrimary">Edit Lease ({lease.status})</Typography>
                         </Breadcrumbs>
                         <Box
                             sx={{
@@ -64,20 +64,20 @@ const PortfolioEdit = (props) => {
                                         <Formik
                                             enableReinitialize={true}
                                             initialValues={{
-                                                nickname: portfolio.nickname,
-                                                capacityRatio: portfolio.capacityRatio,
-                                                files: "",
-                                                owner:  props.userLogged._id
+                                                status: lease.status,
+                                                startDate: lease.startDate,
+                                                endDate: lease.endDate
                                             }}
                                             validationSchema={Yup.object().shape({
-                                                nickname: Yup.string()
-                                                    .max(255)
-                                                    .required("Nickname is required"),
-                                                capacityRatio: Yup.string().max(255).required("Capacity ratio is required")
+                                                status: Yup.string()
+                                                .max(255)
+                                                .required("Status is required"),                                               
+                                                startDate: Yup.string().required("Start Date is required"),
+                                                endDate: Yup.string().required("End Date is required")
                                             })}
                                             onSubmit={async (values) => {
-                                                await props.updatePortfolio(id, values)
-                                                navigate("/app/portfolio", { replace: true });
+                                                await props.updateLease(id, values)
+                                                navigate("/app/leases", { replace: true });
                                             }}>
                                             {({
                                                   errors,
@@ -91,31 +91,44 @@ const PortfolioEdit = (props) => {
                                                 <form onSubmit={handleSubmit}>
                                                     <Box>
                                                         <Typography color="textPrimary" variant="h2">
-                                                            Edit Portfolio
+                                                            Edit Lease
                                                         </Typography>
                                                     </Box>
                                                     <TextField
-                                                        error={Boolean(touched.nickname && errors.nickname)}
+                                                        error={Boolean(touched.status && errors.status)}
                                                         fullWidth
-                                                        helperText={touched.nickname && errors.nickname}
-                                                        label="Nickname"
+                                                        helperText={touched.status && errors.status}
+                                                        label="Status"
                                                         margin="normal"
-                                                        name="nickname"
+                                                        name="status"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.nickname}
+                                                        value={values.status}
+                                                        variant="outlined"
+                                                    />
+                                                   
+                                                    <TextField
+                                                        error={Boolean(touched.startDate && errors.startDate)}
+                                                        fullWidth
+                                                        helperText={touched.startDate && errors.startDate}
+                                                        label="Start Date"
+                                                        margin="normal"
+                                                        name="startDate"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.startDate}
                                                         variant="outlined"
                                                     />
                                                     <TextField
-                                                        error={Boolean(touched.capacityRatio && errors.capacityRatio)}
+                                                        error={Boolean(touched.endDate && errors.endDate)}
                                                         fullWidth
-                                                        helperText={touched.lastName && errors.capacityRatio}
-                                                        label="Capacity Ratio"
+                                                        helperText={touched.endDate && errors.endDate}
+                                                        label="End Date"
                                                         margin="normal"
-                                                        name="capacityRatio"
+                                                        name="endDate"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
-                                                        value={values.capacityRatio}
+                                                        value={values.endDate}
                                                         variant="outlined"
                                                     />
                                                     <Box
@@ -151,7 +164,7 @@ const PortfolioEdit = (props) => {
 };
 
 const mapStateToProps = state => ({
-    portfolios: state.portfolio.portfolios,
+    leases: state.lease.leases,
     userLogged: state.auth.userLogged,
 })
-export default connect(mapStateToProps, {updatePortfolio})(PortfolioEdit);
+export default connect(mapStateToProps, {updateLease})(LeaseEdit);

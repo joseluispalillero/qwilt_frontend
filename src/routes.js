@@ -14,12 +14,15 @@ import PortfolioEdit from "src/pages/Portfolio/PortfolioEdit";
 
 import PropertiesList from "src/pages/Properties/PropertiesList";
 import PropertyAdd from "src/pages/Properties/PropertyAdd";
+import PropertyEdit from "src/pages/Properties/PropertyEdit";
 
 import LeasesList from "./pages/Leases/LeasesList";
 import LeaseAdd from "src/pages/Leases/LeaseAdd";
+import LeaseEdit from "src/pages/Leases/LeaseEdit";
 
 import ContactsList from "./pages/Contacts/ContactsList";
 import ContactsAdd from "src/pages/Contacts/ContactAdd";
+import ContactEdit from "src/pages/Contacts/ContactEdit";
 
 const routes = [
   {
@@ -32,12 +35,15 @@ const routes = [
 
       { path: "properties", element: <PropertiesList /> },
       { path: "properties/add", element: <PropertyAdd /> },
+      { path: "properties/edit/:id", element: <PropertyEdit/> },
 
       { path: "leases", element: <LeasesList /> },
       { path: "leases/add", element: <LeaseAdd /> },
+      { path: "leases/edit/:id", element: <LeaseEdit /> },
 
       { path: "contacts", element: <ContactsList /> },
       { path: "contacts/add", element: <ContactsAdd /> },
+      { path: "contacts/edit/:id", element: <ContactEdit /> },
 
       { path: "account", element: <Account /> },
       { path: "dashboard", element: <Dashboard /> },
