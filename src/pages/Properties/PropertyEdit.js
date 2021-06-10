@@ -78,12 +78,10 @@ const PropertyEdit = (props) => {
                                                     .required("Name is required"),
                                                 location: Yup.string().max(2000).required("Location is required"),
                                                 targetRent: Yup.string().required("Target Rent is required"),
-                                                currentRent: Yup.string().required("Current Rent is required"),
                                                 portfolioId: Yup.string().required("Portfolio is required"),
                                                 description: Yup.string().max(2000).required("Description is required")
                                             })}
                                             onSubmit={async (values) => {
-
                                                 await props.updateProperty(id, values)
                                                 navigate("/app/properties");
                                             }}>
@@ -164,19 +162,6 @@ const PropertyEdit = (props) => {
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                         value={values.targetRent}
-                                                        variant="outlined"
-                                                    />
-                                                    <TextField
-                                                        type="number"
-                                                        error={Boolean(touched.currentRent && errors.currentRent)}
-                                                        fullWidth
-                                                        helperText={touched.currentRent && errors.currentRent}
-                                                        label="Current rent"
-                                                        margin="normal"
-                                                        name="currentRent"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        value={values.currentRent}
                                                         variant="outlined"
                                                     />
                                                     <Box
