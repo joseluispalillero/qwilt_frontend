@@ -1,3 +1,4 @@
+import {useState} from "react";
 import { Helmet } from "react-helmet";
 import {
     Box,
@@ -10,18 +11,31 @@ import {
     Typography,
     TextField
 } from "@material-ui/core";
-import { addPortfolio } from "../../redux/actions/portfolioAction";
+import { updatePortfolio } from "../../redux/actions/portfolioAction";
 import { connect } from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
+import {useEffect} from "react";
 
-const PortfolioAdd = (props) => {
+const PortfolioEdit = (props) => {
     const navigate = useNavigate();
+    const [portfolio, setPortfolio] = useState({});
+    const { id } = useParams();
+
+    useEffect(() => {
+        fetchDataEdit()
+    }, []);
+
+    const fetchDataEdit = () => {
+        console.log(props.portfolios)
+        setPortfolio(props.portfolios.filter(portfolio => portfolio._id === id )[0])
+    };
+
     return (
         <>
             <Helmet>
-                <title>Add new Portfolio</title>
+                <title>Edit Portfolio</title>
             </Helmet>
             <Box
                 sx={{
@@ -35,7 +49,7 @@ const PortfolioAdd = (props) => {
                             <Link color="inherit" href="/app/portfolio">
                                 Portfolios
                             </Link>
-                            <Typography color="textPrimary">Add Portfolio</Typography>
+                            <Typography color="textPrimary">Edit Portfolio ({portfolio.nickname})</Typography>
                         </Breadcrumbs>
                         <Box
                             sx={{
@@ -48,9 +62,10 @@ const PortfolioAdd = (props) => {
                                 <CardContent>
                                     <Container maxWidth="sm">
                                         <Formik
+                                            enableReinitialize={true}
                                             initialValues={{
-                                                nickname: "",
-                                                capacityRatio: "",
+                                                nickname: portfolio.nickname,
+                                                capacityRatio: portfolio.capacityRatio,
                                                 files: "",
                                                 owner:  props.userLogged._id
                                             }}
@@ -61,7 +76,7 @@ const PortfolioAdd = (props) => {
                                                 capacityRatio: Yup.string().max(255).required("Capacity ratio is required")
                                             })}
                                             onSubmit={async (values) => {
-                                                await props.addPortfolio(values)
+                                                await props.updatePortfolio(id, values)
                                                 navigate("/app/portfolio", { replace: true });
                                             }}>
                                             {({
@@ -139,4 +154,4 @@ const mapStateToProps = state => ({
     portfolios: state.portfolio.portfolios,
     userLogged: state.auth.userLogged,
 })
-export default connect(mapStateToProps, {addPortfolio})(PortfolioAdd);
+export default connect(mapStateToProps, {updatePortfolio})(PortfolioEdit);

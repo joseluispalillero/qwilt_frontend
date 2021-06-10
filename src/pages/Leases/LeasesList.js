@@ -10,13 +10,14 @@ import {useEffect} from "react";
 
 const LeasesList = (props) => {
 
-  useEffect(() => {
-      async function getData(props) {
-          await props.getLeases()
-          await props.getContacts()
-      }
-      getData(props)
-  }, [props]);
+    useEffect(() => {
+        fetchData()
+    }, []);
+
+    const fetchData = async () => {
+        await props.getLeases()
+        await props.getContacts()
+    };
 
   return (
       <>
@@ -34,7 +35,7 @@ const LeasesList = (props) => {
                   <Box sx={{pt: 3}}>
                       <LeasesListResults
                           leases={props.leases? props.leases: []}
-                          contacts={props.contacts? props.contacts: []}                         
+                          contacts={props.contacts? props.contacts: []}
                           userLogged={props.userLogged}/>
                   </Box>
                   <Box
@@ -52,7 +53,7 @@ const LeasesList = (props) => {
 
 const mapStateToProps = state => ({
     contacts: state.contact.contacts,
-    leases: state.lease.leases, 
+    leases: state.lease.leases,
     userLogged: state.auth.userLogged,
 })
 export default connect(mapStateToProps, {getContacts , getLeases})(LeasesList);

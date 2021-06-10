@@ -10,6 +10,7 @@ import NotFound from "src/pages/NotFound";
 
 import PortfolioList from "src/pages/Portfolio/PortfolioList";
 import PortfolioAdd from "src/pages/Portfolio/PortfolioAdd";
+import PortfolioEdit from "src/pages/Portfolio/PortfolioEdit";
 
 import PropertiesList from "src/pages/Properties/PropertiesList";
 import PropertyAdd from "src/pages/Properties/PropertyAdd";
@@ -27,6 +28,7 @@ const routes = [
     children: [
       { path: "portfolio", element: <PortfolioList /> },
       { path: "portfolio/add", element: <PortfolioAdd/> },
+      { path: "portfolio/edit/:id", element: <PortfolioEdit/> },
 
       { path: "properties", element: <PropertiesList /> },
       { path: "properties/add", element: <PropertyAdd /> },

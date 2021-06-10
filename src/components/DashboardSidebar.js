@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import {
   Briefcase as BriefcaseIcon,
-  DollarSign as DollarSignIcon,
   Home as HomeIcon,
   MapPin as MapPinIcon,
   Settings as SettingsIcon,
@@ -54,12 +53,6 @@ const items = [
     icon: StarIcon,
     title: "Leases",
   },
-  /*,
-  {
-    href: "/app/financials",
-    icon: DollarSignIcon,
-    title: "Financials",
-  },*/
   {
     href: "/app/settings",
     icon: SettingsIcon,

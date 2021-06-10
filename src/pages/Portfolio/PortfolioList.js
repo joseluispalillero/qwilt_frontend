@@ -8,9 +8,13 @@ import {useEffect} from "react";
 
 const PortfolioList = (props) => {
 
-    useEffect((props) => {
-        props.getPortfolios()
+    useEffect(() => {
+        fetchData()
     }, []);
+
+    const fetchData = async () => {
+        await props.getPortfolios()
+    };
 
     return (
         <>
@@ -22,8 +26,7 @@ const PortfolioList = (props) => {
                     backgroundColor: "background.default",
                     minHeight: "100%",
                     py: 3,
-                }}
-            >
+                }}>
                 <Container maxWidth={false}>
                     <PortfolioListToolbar/>
                     <Box sx={{pt: 3}}>

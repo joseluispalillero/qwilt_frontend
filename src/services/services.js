@@ -56,6 +56,14 @@ class Services {
     return this.service.post("/portfolios/create", data);
   }
 
+  updatePortfolio(id, data) {
+    return this.service.patch("/portfolios/update/" + id , data);
+  }
+
+  deletePortfolio(id) {
+    return this.service.delete("/portfolios/delete/" + id );
+  }
+
   //Property
   getProperties() {
     return this.service.get("/properties/all");

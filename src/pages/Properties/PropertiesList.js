@@ -10,12 +10,13 @@ import {useEffect} from "react";
 const PropertiesList = (props) => {
 
     useEffect(() => {
-        async function getData(props) {
-            await props.getProperties()
-            await props.getPortfolios()
-        }
-        getData(props)
-    }, [props]);
+        fetchData()
+    }, []);
+
+    const fetchData = async () => {
+        await props.getProperties()
+        await props.getPortfolios()
+    };
 
     return (
         <>

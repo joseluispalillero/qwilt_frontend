@@ -10,12 +10,13 @@ import {useEffect} from "react";
 const ContactsList = (props) => {
 
     useEffect(() => {
-        async function getData(props) {
-            await props.getContacts()
-            await props.getProperties()
-        }
-        getData(props)
-    }, [props]);
+        fetchData()
+    }, []);
+
+    const fetchData = async () => {
+        await props.getContacts()
+        await props.getProperties()
+    };
 
     return (
         <>

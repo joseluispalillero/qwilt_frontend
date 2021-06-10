@@ -21,7 +21,6 @@ export const getPortfolios = () => async dispatch => {
   dispatch({type: FETCH_PORTFOLIO_SENT})
   try{
     const response = await portfolioService.getPortfolios();
-    console.log(response.data.Portfolios)
     dispatch({type: FETCH_PORTFOLIO_SUCCESS, payload: response.data.Portfolios})
   } catch(err) {
     dispatch({type: FETCH_PORTFOLIO_FAILURE, payload: err.message})
