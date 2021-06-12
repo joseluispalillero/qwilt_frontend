@@ -86,6 +86,10 @@ class Services {
     return this.service.delete("/properties/delete/" + id );
   }
 
+  getStatusProperty() {
+    return this.service.get("/properties/status/");
+  }
+
   //Leases
   getLeases() {
     return this.service.get("/leases/all");
@@ -118,6 +122,10 @@ class Services {
 
   deleteContact(id) {
     return this.service.delete("/contacts/delete/" + id );
+  }
+
+  getTypeContacts() {
+    return this.service.get("/contacts/type/");
   }
 
   //files

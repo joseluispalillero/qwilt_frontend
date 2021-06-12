@@ -61,3 +61,15 @@ export const removeContact = (id) => async dispatch => {
     console.log(err)
   }
 }
+
+export const getTypeContacts = () => async dispatch => {
+  dispatch({type: FETCH_CONTACT_SENT})
+  try{
+    const response = await contactService.getTypeContacts();
+    console.log(response.data.Contacts)
+    dispatch({type: FETCH_CONTACT_SUCCESS, payload: response.data.Contacts})
+  } catch(err) {
+    dispatch({type: FETCH_CONTACT_FAILURE, payload: err.message})
+    console.log(err)
+  }
+}

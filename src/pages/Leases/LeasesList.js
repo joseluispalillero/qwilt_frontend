@@ -3,7 +3,8 @@ import { Box, Container, Pagination } from "@material-ui/core";
 import LeasesListToolbar from "../../components/leases/LeasesListToolbar";
 import LeasesListResults from "../../components/leases/LeasesListResults";
 import { getLeases } from "../../redux/actions/leaseAction";
-import { getContacts } from "../../redux/actions/contactAction";
+import { getTypeContacts } from "../../redux/actions/contactAction";
+import { getStatusProperty } from "../../redux/actions/propertyAction";
 import { connect } from "react-redux";
 import {useEffect} from "react";
 
@@ -15,7 +16,8 @@ const LeasesList = (props) => {
 
     const fetchData = async () => {
         await props.getLeases()
-        await props.getContacts()
+        await props.getTypeContacts()
+        await props.getStatusProperty()
     };
 
   return (
@@ -35,6 +37,7 @@ const LeasesList = (props) => {
                       <LeasesListResults
                           leases={props.leases? props.leases: []}
                           contacts={props.contacts? props.contacts: []}
+                          properties={props.properties? props.properties: []}
                           userLogged={props.userLogged}/>
                   </Box>
                   <Box
@@ -53,6 +56,7 @@ const LeasesList = (props) => {
 const mapStateToProps = state => ({
     contacts: state.contact.contacts,
     leases: state.lease.leases,
+    properties: state.property.properties,
     userLogged: state.auth.userLogged,
 })
-export default connect(mapStateToProps, {getContacts , getLeases})(LeasesList);
+export default connect(mapStateToProps, {getTypeContacts , getLeases , getStatusProperty })(LeasesList);

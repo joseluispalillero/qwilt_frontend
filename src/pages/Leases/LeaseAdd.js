@@ -87,6 +87,38 @@ const LeaseAdd = (props) => {
                                                         </Typography>
                                                         <br/>
                                                     </Box>
+                                                    <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="contact">Contact</InputLabel>
+                                                        <Select
+                                                            margin="normal"
+                                                            label="Contacts"
+                                                            helperText={touched.contactId && errors.contactId}
+                                                            fullWidth
+                                                            name="contactId"
+                                                            labelId="contact"
+                                                            value={values.contactId}
+                                                            onChange={handleChange}>
+                                                            {props.contacts? props.contacts.map((contact) => (
+                                                                <MenuItem value={contact._id}>{contact.name}</MenuItem>
+                                                            )): null}
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="property">Property</InputLabel>
+                                                        <Select
+                                                            margin="normal"
+                                                            label="Properties"
+                                                            helperText={touched.propertyId && errors.propertyId}
+                                                            fullWidth
+                                                            name="propertyId"
+                                                            labelId="property"
+                                                            value={values.propertyId}
+                                                            onChange={handleChange}>
+                                                            {props.properties? props.properties.map((property) => (
+                                                                <MenuItem value={property._id}>{property.name}</MenuItem>
+                                                            )): null}
+                                                        </Select>
+                                                    </FormControl>
                                                     <TextField
                                                         error={Boolean(touched.status && errors.status)}
                                                         fullWidth
@@ -98,8 +130,7 @@ const LeaseAdd = (props) => {
                                                         onChange={handleChange}
                                                         value={values.status}
                                                         variant="outlined"
-                                                    />
-                                                   
+                                                    />                                                   
                                                     <TextField
                                                         error={Boolean(touched.startDate && errors.startDate)}
                                                         fullWidth
@@ -124,22 +155,6 @@ const LeaseAdd = (props) => {
                                                         value={values.endDate}
                                                         variant="outlined"
                                                     />
-                                                    <FormControl fullWidth margin="normal">
-                                                        <InputLabel id="contact">Contact</InputLabel>
-                                                        <Select
-                                                            margin="normal"
-                                                            label="Contacts"
-                                                            helperText={touched.contactId && errors.contactId}
-                                                            fullWidth
-                                                            name="contactId"
-                                                            labelId="contact"
-                                                            value={values.contactId}
-                                                            onChange={handleChange}>
-                                                            {props.contacts? props.contacts.map((contact) => (
-                                                                <MenuItem value={contact._id}>{contact.name}</MenuItem>
-                                                            )): null}
-                                                        </Select>
-                                                    </FormControl>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -175,5 +190,6 @@ const LeaseAdd = (props) => {
 const mapStateToProps = state => ({
     contacts: state.contact.contacts,
     userLogged: state.auth.userLogged,
+    properties: state.property.properties,
 })
 export default connect(mapStateToProps, {addLease})(LeaseAdd);

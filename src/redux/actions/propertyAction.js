@@ -61,3 +61,15 @@ export const removeProperty = (id) => async dispatch => {
     console.log(err)
   }
 }
+
+export const getStatusProperty = () => async dispatch => {
+  dispatch({type: FETCH_PROPERTY_SENT})
+  try{
+    const response = await propertyService.getStatusProperty();
+    console.log(response.data.Properties)
+    dispatch({type: FETCH_PROPERTY_SUCCESS, payload: response.data.Properties})
+  } catch(err) {
+    dispatch({type: FETCH_PROPERTY_FAILURE, payload: err.message})
+    console.log(err)
+  }
+}

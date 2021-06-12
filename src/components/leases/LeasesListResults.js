@@ -22,7 +22,7 @@ import {connect} from "react-redux";
 
 
 
-const LeasesListResults = ({   leases,contacts, userLogged, removeLease,...rest }) => {
+const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLease,...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [openDelete, setOpenDelete] = useState(false);
@@ -65,12 +65,11 @@ const LeasesListResults = ({   leases,contacts, userLogged, removeLease,...rest 
             <Table>
               <TableHead>
                 <TableRow>
+                  <TableCell>Property</TableCell>
+                  <TableCell>Contact</TableCell>                  
                   <TableCell>Status</TableCell>
-                  <TableCell>Start Date</TableCell>
-                  <TableCell>End Date</TableCell> 
-                  <TableCell>Contact</TableCell> 
-                  <TableCell>Created Date</TableCell>
-                  <TableCell>Updateda Date</TableCell>
+                  <TableCell>Target Rent</TableCell>
+                  <TableCell>Current Rent</TableCell> 
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -79,23 +78,21 @@ const LeasesListResults = ({   leases,contacts, userLogged, removeLease,...rest 
                     <TableRow
                         hover
                         key={lease.id}>
+                      <TableCell>{lease.contactId.propertyId?
+                          (properties.filter(property=> property._id === lease.contactId.propertyId)[0]?
+                              properties.filter(property=> property._id === lease.contactId.propertyId)[0].description : '') : ''}
+                      </TableCell>                      
+                      <TableCell>{lease.contactId?
+                          (contacts.filter(contact=> contact._id === lease.contactId)[0]?
+                          contacts.filter(contact=> contact._id === lease.contactId)[0].email : '') : ''}
+                      </TableCell>                      
                       <TableCell>{lease.status}</TableCell>
                       <TableCell>
                         {moment(lease.startDate).format("DD/MM/YYYY")}
                       </TableCell>
                       <TableCell>
                         {moment(lease.endDate).format("DD/MM/YYYY")}
-                      </TableCell>
-                      <TableCell>{lease.contactId?
-                          (contacts.filter(contact=> contact._id === lease.contactId)[0]?
-                          contacts.filter(contact=> contact._id === lease.contactId)[0].name : '') : ''}
-                              </TableCell>
-                      <TableCell>
-                        {moment(lease.createdAt).format("DD/MM/YYYY")}
-                      </TableCell>
-                      <TableCell>
-                        {moment(lease.updatedAt).format("DD/MM/YYYY")}
-                      </TableCell>
+                      </TableCell>                      
                       <TableCell>
                         <Button onClick={()=> handleEdit(lease)}>Edit</Button>
                         <Button color="secondary" onClick={()=> handleDelete(lease)}>Delete</Button>
