@@ -23,6 +23,10 @@ import {addLease} from "../../redux/actions/leaseAction";
 const LeaseAdd = (props) => {
     const navigate = useNavigate();
     console.log(props.userLogged)
+
+    const leaseContacts = props.contacts.filter(contact => contact.type === "Tenant" || contact.type === "Interested")
+    const leaseProperties = props.properties.filter(property => property.status === "Available")
+
     return (
         <>
             <Helmet>
@@ -54,18 +58,26 @@ const LeaseAdd = (props) => {
                                     <Container maxWidth="sm">
                                         <Formik
                                             initialValues={{
+                                                name: "",
                                                 status: "",
                                                 startDate: "",
                                                 endDate: "",
-                                                contactId:  0
+                                                rentalRate:"",
+                                                contactId:  0,
+                                                propertyId:  0
                                             }}
                                             validationSchema={Yup.object().shape({
+                                                name: Yup.string()
+                                                .max(255)
+                                                .required("Name is required"),
                                                 status: Yup.string()
                                                     .max(255)
                                                     .required("Status is required"),                                               
                                                 startDate: Yup.string().required("Start Date is required"),
                                                 endDate: Yup.string().required("End Date is required"),
-                                                contactId: Yup.string().required("Contact is required")
+                                                rentalRate: Yup.string().required("Rental Rent is required"),
+                                                contactId: Yup.string().required("Contact is required"),
+                                                propertyId: Yup.string().required("Property is required")
                                             })}
                                             onSubmit={async (values) => {
                                                 await props.addLease(values)
@@ -87,6 +99,18 @@ const LeaseAdd = (props) => {
                                                         </Typography>
                                                         <br/>
                                                     </Box>
+                                                    <TextField
+                                                        error={Boolean(touched.name && errors.name)}
+                                                        fullWidth
+                                                        helperText={touched.name && errors.name}
+                                                        label="Name"
+                                                        margin="normal"
+                                                        name="name"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.name}
+                                                        variant="outlined"
+                                                    />
                                                     <FormControl fullWidth margin="normal">
                                                         <InputLabel id="contact">Contact</InputLabel>
                                                         <Select
@@ -98,7 +122,7 @@ const LeaseAdd = (props) => {
                                                             labelId="contact"
                                                             value={values.contactId}
                                                             onChange={handleChange}>
-                                                            {props.contacts? props.contacts.map((contact) => (
+                                                            {leaseContacts ? leaseContacts.map((contact) => (
                                                                 <MenuItem value={contact._id}>{contact.name}</MenuItem>
                                                             )): null}
                                                         </Select>
@@ -114,7 +138,7 @@ const LeaseAdd = (props) => {
                                                             labelId="property"
                                                             value={values.propertyId}
                                                             onChange={handleChange}>
-                                                            {props.properties? props.properties.map((property) => (
+                                                            {leaseProperties? leaseProperties.map((property) => (
                                                                 <MenuItem value={property._id}>{property.name}</MenuItem>
                                                             )): null}
                                                         </Select>
@@ -130,7 +154,20 @@ const LeaseAdd = (props) => {
                                                         onChange={handleChange}
                                                         value={values.status}
                                                         variant="outlined"
-                                                    />                                                   
+                                                    />  
+                                                     <TextField
+                                                        type="number"
+                                                        error={Boolean(touched.rentalRate && errors.rentalRate)}
+                                                        fullWidth
+                                                        helperText={touched.rentalRate && errors.rentalRate}
+                                                        label="Rental Rate"
+                                                        margin="normal"
+                                                        name="rentalRate"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.rentalRate}
+                                                        variant="outlined"
+                                                    />                                                 
                                                     <TextField
                                                         error={Boolean(touched.startDate && errors.startDate)}
                                                         fullWidth

@@ -68,18 +68,26 @@ const LeaseEdit = (props) => {
                                         <Formik
                                             enableReinitialize={true}
                                             initialValues={{
+                                                name: lease.name,
                                                 status: lease.status,
                                                 startDate: lease.startDate,
                                                 endDate: lease.endDate,
-                                                contactId : lease.contactId
+                                                contactId : lease.contactId,
+                                                rentalRate: lease.rentalRate,
+                                                propertyId:  lease.propertyId
                                             }}
                                             validationSchema={Yup.object().shape({
-                                                status: Yup.string()
+                                                name: Yup.string()
                                                 .max(255)
-                                                .required("Status is required"),                                               
+                                                .required("Name is required"),
+                                                status: Yup.string()
+                                                    .max(255)
+                                                    .required("Status is required"),                                               
                                                 startDate: Yup.string().required("Start Date is required"),
                                                 endDate: Yup.string().required("End Date is required"),
-                                                contactId: Yup.string().required("Contact is required")
+                                                rentalRate: Yup.string().required("Rental Rent is required"),
+                                                contactId: Yup.string().required("Contact is required"),
+                                                propertyId: Yup.string().required("Property is required")
                                             })}
                                             onSubmit={async (values) => {
                                                 await props.updateLease(id, values)
@@ -101,6 +109,50 @@ const LeaseEdit = (props) => {
                                                         </Typography>
                                                     </Box>
                                                     <TextField
+                                                        error={Boolean(touched.name && errors.name)}
+                                                        fullWidth
+                                                        helperText={touched.name && errors.name}
+                                                        label="Name"
+                                                        margin="normal"
+                                                        name="name"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.name}
+                                                        variant="outlined"
+                                                    />
+                                                     <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="contact">Contact</InputLabel>
+                                                        <Select
+                                                            margin="normal"
+                                                            label="Contacts"
+                                                            helperText={touched.contactId && errors.contactId}
+                                                            fullWidth
+                                                            name="contactId"
+                                                            labelId="contact"
+                                                            value={values.contactId}
+                                                            onChange={handleChange}>
+                                                            {props.contacts? props.contacts.map((contact) => (
+                                                                <MenuItem value={contact._id}>{contact.name}</MenuItem>
+                                                            )): null}
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormControl fullWidth margin="normal">
+                                                        <InputLabel id="property">Property</InputLabel>
+                                                        <Select
+                                                            margin="normal"
+                                                            label="Properties"
+                                                            helperText={touched.propertyId && errors.propertyId}
+                                                            fullWidth
+                                                            name="propertyId"
+                                                            labelId="property"
+                                                            value={values.propertyId}
+                                                            onChange={handleChange}>
+                                                            {props.properties ? props.properties.map((property) => (
+                                                                <MenuItem value={property._id}>{property.name}</MenuItem>
+                                                            )): null}
+                                                        </Select>
+                                                    </FormControl>
+                                                    <TextField
                                                         error={Boolean(touched.status && errors.status)}
                                                         fullWidth
                                                         helperText={touched.status && errors.status}
@@ -112,7 +164,19 @@ const LeaseEdit = (props) => {
                                                         value={values.status}
                                                         variant="outlined"
                                                     />
-                                                   
+                                                   <TextField
+                                                        type="number"
+                                                        error={Boolean(touched.rentalRate && errors.rentalRate)}
+                                                        fullWidth
+                                                        helperText={touched.rentalRate && errors.rentalRate}
+                                                        label="Rental Rate"
+                                                        margin="normal"
+                                                        name="rentalRate"
+                                                        onBlur={handleBlur}
+                                                        onChange={handleChange}
+                                                        value={values.rentalRate}
+                                                        variant="outlined"
+                                                    />   
                                                     <TextField
                                                         error={Boolean(touched.startDate && errors.startDate)}
                                                         fullWidth
@@ -136,23 +200,7 @@ const LeaseEdit = (props) => {
                                                         onChange={handleChange}
                                                         value={values.endDate}
                                                         variant="outlined"
-                                                    />
-                                                    <FormControl fullWidth margin="normal">
-                                                        <InputLabel id="contact">Contact</InputLabel>
-                                                        <Select
-                                                            margin="normal"
-                                                            label="Contacts"
-                                                            helperText={touched.contactId && errors.contactId}
-                                                            fullWidth
-                                                            name="contactId"
-                                                            labelId="contact"
-                                                            value={values.contactId}
-                                                            onChange={handleChange}>
-                                                            {props.contacts? props.contacts.map((contact) => (
-                                                                <MenuItem value={contact._id}>{contact.name}</MenuItem>
-                                                            )): null}
-                                                        </Select>
-                                                    </FormControl>
+                                                    />                                                   
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -188,6 +236,7 @@ const LeaseEdit = (props) => {
 const mapStateToProps = state => ({
     leases: state.lease.leases,
     contacts: state.contact.contacts,
+    properties: state.property.properties,
     userLogged: state.auth.userLogged,
 })
 export default connect(mapStateToProps, {updateLease})(LeaseEdit);

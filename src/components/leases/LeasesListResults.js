@@ -66,10 +66,10 @@ const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLe
               <TableHead>
                 <TableRow>
                   <TableCell>Property</TableCell>
-                  <TableCell>Contact</TableCell>                  
+                  <TableCell>Contact</TableCell> 
+                  <TableCell>Lease Name</TableCell>                  
                   <TableCell>Status</TableCell>
-                  <TableCell>Target Rent</TableCell>
-                  <TableCell>Current Rent</TableCell> 
+                  <TableCell>Target Rent</TableCell>                  
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -78,21 +78,17 @@ const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLe
                     <TableRow
                         hover
                         key={lease.id}>
-                      <TableCell>{lease.contactId.propertyId?
-                          (properties.filter(property=> property._id === lease.contactId.propertyId)[0]?
-                              properties.filter(property=> property._id === lease.contactId.propertyId)[0].description : '') : ''}
+                      <TableCell>{lease.propertyId?
+                          (properties.filter(property=> property._id === lease.propertyId)[0]?
+                              properties.filter(property=> property._id === lease.propertyId)[0].name : '') : ''}
                       </TableCell>                      
                       <TableCell>{lease.contactId?
                           (contacts.filter(contact=> contact._id === lease.contactId)[0]?
-                          contacts.filter(contact=> contact._id === lease.contactId)[0].email : '') : ''}
-                      </TableCell>                      
+                          contacts.filter(contact=> contact._id === lease.contactId)[0].name : '') : ''}
+                      </TableCell> 
+                      <TableCell>{lease.name}</TableCell>                     
                       <TableCell>{lease.status}</TableCell>
-                      <TableCell>
-                        {moment(lease.startDate).format("DD/MM/YYYY")}
-                      </TableCell>
-                      <TableCell>
-                        {moment(lease.endDate).format("DD/MM/YYYY")}
-                      </TableCell>                      
+                      <TableCell>{lease.rentalRate}</TableCell>                                          
                       <TableCell>
                         <Button onClick={()=> handleEdit(lease)}>Edit</Button>
                         <Button color="secondary" onClick={()=> handleDelete(lease)}>Delete</Button>
