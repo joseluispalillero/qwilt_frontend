@@ -19,11 +19,24 @@ import { connect } from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
+import React, {useState} from 'react';
 import {addProperty} from "../../redux/actions/propertyAction";
+
+import FormDialog from "src/components/Dialog";
 
 const PropertyAdd = (props) => {
     const navigate = useNavigate();
-    console.log(props.userLogged)
+    
+    const [url, setUrl] = useState([])
+
+    const onReturnFile = (url_) => {
+        const allUrl = url
+        //url_.forEach(item =>{
+            allUrl.push(url_)
+        //})
+        setUrl(allUrl);
+    }
+
     return (
         <>
             <Helmet>
@@ -59,7 +72,8 @@ const PropertyAdd = (props) => {
                                                 location: "",
                                                 description: "",
                                                 targetRent:  0,
-                                                portfolioId: 0
+                                                portfolioId: 0,
+                                                photos: url
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -90,6 +104,7 @@ const PropertyAdd = (props) => {
                                                         </Typography>
                                                         <br/>
                                                     </Box>
+                                                  
                                                     <FormControl fullWidth>
                                                         <InputLabel id="portfolio">Portfolio</InputLabel>
                                                         <Select
@@ -154,6 +169,7 @@ const PropertyAdd = (props) => {
                                                         value={values.targetRent}
                                                         variant="outlined"
                                                     />
+                                                     <FormDialog onReturnPhoto={onReturnFile}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

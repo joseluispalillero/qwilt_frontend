@@ -21,11 +21,12 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
 
+import FormDialog from "src/components/Dialog";
+
 const PropertyEdit = (props) => {
     const navigate = useNavigate();
     const [property, setProperty] = useState({});
     const { id } = useParams();
-
     useEffect(() => {
         fetchDataEdit()
     }, []);
@@ -33,6 +34,16 @@ const PropertyEdit = (props) => {
     const fetchDataEdit = () => {
         setProperty(props.properties.filter(property => property._id === id )[0])
     };
+
+    const [url, setUrl] = useState([])
+
+    const onReturnFile = (url_) => {
+        const allUrl = url
+        //url_.forEach(item =>{
+            allUrl.push(url_)
+        //})
+        setUrl(allUrl);
+    }
 
     return (
         <>
@@ -70,7 +81,8 @@ const PropertyEdit = (props) => {
                                                 location: property.location,
                                                 description: property.description,
                                                 targetRent:  property.targetRent,
-                                                portfolioId: property.portfolioId
+                                                portfolioId: property.portfolioId,
+                                                photos: url
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -164,6 +176,7 @@ const PropertyEdit = (props) => {
                                                         value={values.targetRent}
                                                         variant="outlined"
                                                     />
+                                                     <FormDialog onReturnPhoto={onReturnFile} data={property.photos}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

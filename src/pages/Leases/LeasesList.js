@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { Box, Container, Pagination } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 import LeasesListToolbar from "../../components/leases/LeasesListToolbar";
 import LeasesListResults from "../../components/leases/LeasesListResults";
 import { getLeases } from "../../redux/actions/leaseAction";
@@ -17,7 +17,7 @@ const LeasesList = (props) => {
     const fetchData = async () => {
         await props.getLeases()
         await props.getContacts()
-        await props.getProperty()
+        await props.getProperties()
     };
 
   return (

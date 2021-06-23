@@ -36,8 +36,8 @@ class Services {
   }
 
   //files
-  upload(file) {
-    return this.service.post("/upload", file)
+  Upload(file) {
+    return this.service.post("/upload/", file)
   }
 
   signup(data) {
@@ -128,18 +128,18 @@ class Services {
     return this.service.get("/contacts/type/");
   }
 
-  //files
+  //files  
   upload(file, onUploadProgress) {
     let formData = new FormData();
-    formData.append("photo", file);
-    return this.service.post("/v2/upload", formData, {
+    formData.append("file", file);
+    return this.service.post("/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
       onUploadProgress,
     });
   }
-
+ 
   getFiles() {
     return this.service.get("/files");
   }
