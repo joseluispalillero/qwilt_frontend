@@ -6,46 +6,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {Formik} from "formik";
 import * as yup from "yup";
 
-//import upload from "../services/services";
 
 import Services from "../services/services";
 const uploadService = new Services();
-
-class Thumb extends React.Component {
-  state = {
-    loading: false,
-    thumb: undefined,
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.file) { return; }
-
-    this.setState({ loading: true }, () => {
-      let reader = new FileReader();
-
-      reader.onloadend = () => {
-        this.setState({ loading: false, thumb: reader.result });
-      };
-
-      reader.readAsDataURL(nextProps.file);
-    });
-  }
-
-  render() {
-    const { file } = this.props;
-    const { loading, thumb } = this.state;
-
-    if (!file) { return null; }
-
-    if (loading) { return <p>loading...</p>; }
-
-    return (<img src={thumb}
-      alt={file.name}
-      className="img-thumbnail mt-2"
-      height={200}
-      width={200} />);
-  }
-}
 
 
 export default function FormDialog(props) {
@@ -59,6 +22,12 @@ export default function FormDialog(props) {
     setOpen(false);
   };
 
+  const ImageThumb = ({ image }) => {  
+    return <img src={URL.createObjectURL(image)} alt={image.name} style={{height:200, width: 200, border:0}}/>;
+  };
+
+
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -70,9 +39,15 @@ export default function FormDialog(props) {
             <Formik 
               initialValues={{ file: null }}
               onSubmit={async (values) => {             
-               
-                const {data} = await uploadService.upload(values.file)  
-                props.onReturnPhoto(data.data.image) 
+                
+                const allImages = [];
+                for (let i = 0; i < values.file.length; i++) {
+                  console.log("Subiendo imagen ", i," >>>> ",values.file.name)
+                  const {data} = await uploadService.upload(values.file[i]) 
+                  allImages.push(data.data.image);                  
+                }
+          
+                props.onReturnPhoto(allImages) 
                 handleClose()
               }} 
               validationSchema={yup.object().shape({
@@ -87,21 +62,16 @@ export default function FormDialog(props) {
                     </div>
                     <div className="form-group">
                       <label for="file">File upload</label>     
-                      <input id="file" name="file" type="file" onChange={(event) => {
-                        setFieldValue("file", event.currentTarget.files[0]);
-                      }} className="form-control" />
-                      <Thumb file={values.file} />
+                      <input id="file" name="file" type="file" multiple onChange={(event) => {
+                        setFieldValue("file", event.currentTarget.files);
+                        }} className="form-control" />
+                        <br/>
+                     {values.files && <ImageThumb image={values.files} />}
                     </div>
                     <br/>
                   </form>
                 );
               }} />           
-    
-              <div className="images-bar">
-                <div className="masking-box gradient-to-left">
-                    <img src={props.data} style={{height:200, width: 200, border:0}} />
-                </div>
-              </div>
         </DialogContent>
       </Dialog>
     </div>

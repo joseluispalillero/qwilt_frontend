@@ -70,6 +70,7 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, removePr
                   <TableCell>Current Rent</TableCell>
                   <TableCell>Portfolio</TableCell>
                   <TableCell>Registration date</TableCell>
+                  <TableCell>Docs</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -89,6 +90,9 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, removePr
                               portfolios.filter(portfolio=> portfolio._id === property.portfolioId)[0].nickname : '') : ''}</TableCell>
                       <TableCell>
                         {moment(property.createdAt).format("DD/MM/YYYY")}
+                      </TableCell>
+                      <TableCell>
+                        <Button>See Docs</Button>
                       </TableCell>
                       <TableCell>
                         <Button onClick={()=> handleEdit(property)}>Edit</Button>

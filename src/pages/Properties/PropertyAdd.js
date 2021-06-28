@@ -30,10 +30,13 @@ const PropertyAdd = (props) => {
     const [url, setUrl] = useState([])
 
     const onReturnFile = (url_) => {
+        
         const allUrl = url
-        //url_.forEach(item =>{
-            allUrl.push(url_)
-        //})
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("push para photo en form >>>>>>>>",url_[i])
+        }
+        
         setUrl(allUrl);
     }
 
@@ -85,6 +88,7 @@ const PropertyAdd = (props) => {
                                                 description: Yup.string().max(2000).required("Description is required")
                                             })}
                                             onSubmit={async (values) => {
+                                                console.log("Form a gurdar   ...", values);
                                                 await props.addProperty(values)
                                                 navigate("/app/properties", { replace: true });
                                             }}>

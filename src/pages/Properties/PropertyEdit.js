@@ -23,6 +23,7 @@ import {useEffect} from "react";
 
 import FormDialog from "src/components/Dialog";
 
+
 const PropertyEdit = (props) => {
     const navigate = useNavigate();
     const [property, setProperty] = useState({});
@@ -30,7 +31,7 @@ const PropertyEdit = (props) => {
     useEffect(() => {
         fetchDataEdit()
     }, []);
-
+    console.log("fotos,,,,,",property.photos);
     const fetchDataEdit = () => {
         setProperty(props.properties.filter(property => property._id === id )[0])
     };
@@ -39,9 +40,11 @@ const PropertyEdit = (props) => {
 
     const onReturnFile = (url_) => {
         const allUrl = url
-        //url_.forEach(item =>{
-            allUrl.push(url_)
-        //})
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("Edicion.............",url_[i])
+        }
+        
         setUrl(allUrl);
     }
 
@@ -198,6 +201,7 @@ const PropertyEdit = (props) => {
                                                 </form>
                                             )}
                                         </Formik>
+                                  
                                     </Container>
                                 </CardContent>
                             </Card>
