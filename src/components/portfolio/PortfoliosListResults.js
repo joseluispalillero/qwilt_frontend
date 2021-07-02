@@ -91,7 +91,7 @@ const PortfoliosListResults = ({ portfolios, userLogged, removePortfolio, ...res
                   <TableCell>{userLogged.firstName + " " + userLogged.lastName}</TableCell>
                   <TableCell>{portfolio.capacityRatio}</TableCell>
                   <TableCell>
-                     <SimpleModal data={portfolio.docs}/> 
+                     <SimpleModal data={portfolio.docs} type="docs"/> 
                   </TableCell>
                   <TableCell>
                     {moment(portfolio.createdAt).format("DD/MM/YYYY")}

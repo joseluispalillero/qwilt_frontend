@@ -91,7 +91,7 @@ const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLe
                       <TableCell>{lease.name}</TableCell>                     
                       <TableCell>{lease.status}</TableCell>
                       <TableCell>{lease.rentalRate}</TableCell>     
-                      <SimpleModal data={lease.docs}/>                                        
+                      <SimpleModal data={lease.docs} type="docs"/>                                        
                       <TableCell>
                         <Button onClick={()=> handleEdit(lease)}>Edit</Button>
                         <Button color="secondary" onClick={()=> handleDelete(lease)}>Delete</Button>

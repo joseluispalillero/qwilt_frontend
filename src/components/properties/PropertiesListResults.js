@@ -93,7 +93,7 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, removePr
                         {moment(property.createdAt).format("DD/MM/YYYY")}
                       </TableCell>
                       <TableCell>
-                         <SimpleModal data={property.photos}/>   
+                         <SimpleModal data={property.photos} type=""/>   
                       </TableCell>
                       <TableCell>
                         <Button onClick={()=> handleEdit(property)}>Edit</Button>
