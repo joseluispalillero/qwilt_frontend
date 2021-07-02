@@ -19,6 +19,7 @@ import {
 import {useNavigate} from "react-router-dom";
 import {removeProperty} from "../../redux/actions/propertyAction";
 import {connect} from "react-redux";
+import SimpleModal from "src/components/SimpleModal";
 
 const PropertiesListResults = ( {  properties, portfolios,  userLogged, removeProperty, ...rest }) => {
   const [limit, setLimit] = useState(10);
@@ -92,7 +93,7 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, removePr
                         {moment(property.createdAt).format("DD/MM/YYYY")}
                       </TableCell>
                       <TableCell>
-                        <Button>See Docs</Button>
+                         <SimpleModal data={property.photos}/>   
                       </TableCell>
                       <TableCell>
                         <Button onClick={()=> handleEdit(property)}>Edit</Button>

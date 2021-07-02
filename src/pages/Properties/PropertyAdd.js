@@ -21,24 +21,26 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import React, {useState} from 'react';
 import {addProperty} from "../../redux/actions/propertyAction";
-
 import FormDialog from "src/components/Dialog";
 
 const PropertyAdd = (props) => {
-    const navigate = useNavigate();
-    
+    const navigate = useNavigate();    
     const [url, setUrl] = useState([])
+    const [salida, setSalida] = React.useState("");
 
-    const onReturnFile = (url_) => {
-        
+    const onReturnFile = (url_) => {        
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
-            console.log("push para photo en form >>>>>>>>",url_[i])
-        }
-        
+            console.log("push para photo en form >>>>>>>>",url_[i])   
+            Progress(url_[i])         
+        }        
         setUrl(allUrl);
     }
+
+    const Progress = (data) => {
+        setSalida(data);
+      };
 
     return (
         <>
@@ -173,7 +175,7 @@ const PropertyAdd = (props) => {
                                                         value={values.targetRent}
                                                         variant="outlined"
                                                     />
-                                                     <FormDialog onReturnPhoto={onReturnFile}/>
+                                                    <FormDialog onReturnPhoto={onReturnFile} type={"multiple"} typeDoc={".jpg,.png"}/>                                             
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

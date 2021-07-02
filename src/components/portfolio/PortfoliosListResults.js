@@ -19,6 +19,7 @@ import {
 import {useNavigate} from "react-router-dom";
 import {removePortfolio} from "../../redux/actions/portfolioAction";
 import {connect} from "react-redux";
+import SimpleModal from "src/components/SimpleModal";
 
 const PortfoliosListResults = ({ portfolios, userLogged, removePortfolio, ...rest }) => {
   const [limit, setLimit] = useState(10);
@@ -90,7 +91,7 @@ const PortfoliosListResults = ({ portfolios, userLogged, removePortfolio, ...res
                   <TableCell>{userLogged.firstName + " " + userLogged.lastName}</TableCell>
                   <TableCell>{portfolio.capacityRatio}</TableCell>
                   <TableCell>
-                    <Button>See Docs</Button>
+                     <SimpleModal data={portfolio.docs}/> 
                   </TableCell>
                   <TableCell>
                     {moment(portfolio.createdAt).format("DD/MM/YYYY")}

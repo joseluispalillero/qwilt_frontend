@@ -15,9 +15,28 @@ import { connect } from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
+import React, {useState} from 'react';
+import FormDialog from "src/components/Dialog";
 
 const PortfolioAdd = (props) => {
     const navigate = useNavigate();
+    const [url, setUrl] = useState([])
+    const [salida, setSalida] = React.useState("");
+
+    const onReturnFile = (url_) => {        
+        const allUrl = url
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("push para photo en form >>>>>>>>",url_[i])   
+            Progress(url_[i])         
+        }        
+        setUrl(allUrl);
+    }
+
+    const Progress = (data) => {
+        setSalida(data);
+      };
+
     return (
         <>
             <Helmet>
@@ -51,7 +70,7 @@ const PortfolioAdd = (props) => {
                                             initialValues={{
                                                 nickname: "",
                                                 capacityRatio: "",
-                                                files: "",
+                                                docs: url,
                                                 owner:  props.userLogged._id
                                             }}
                                             validationSchema={Yup.object().shape({
@@ -103,6 +122,7 @@ const PortfolioAdd = (props) => {
                                                         value={values.capacityRatio}
                                                         variant="outlined"
                                                     />
+                                                    <FormDialog onReturnPhoto={onReturnFile} type={""} typeDoc={""}/>    
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

@@ -19,6 +19,7 @@ import {
 import {useNavigate} from "react-router-dom";
 import {removeLease} from "../../redux/actions/leaseAction";
 import {connect} from "react-redux";
+import SimpleModal from "src/components/SimpleModal";
 
 
 
@@ -69,7 +70,8 @@ const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLe
                   <TableCell>Contact</TableCell> 
                   <TableCell>Lease Name</TableCell>                  
                   <TableCell>Status</TableCell>
-                  <TableCell>Target Rent</TableCell>                  
+                  <TableCell>Target Rent</TableCell>   
+                  <TableCell>Docs</TableCell>            
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -88,7 +90,8 @@ const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLe
                       </TableCell> 
                       <TableCell>{lease.name}</TableCell>                     
                       <TableCell>{lease.status}</TableCell>
-                      <TableCell>{lease.rentalRate}</TableCell>                                          
+                      <TableCell>{lease.rentalRate}</TableCell>     
+                      <SimpleModal data={lease.docs}/>                                        
                       <TableCell>
                         <Button onClick={()=> handleEdit(lease)}>Edit</Button>
                         <Button color="secondary" onClick={()=> handleDelete(lease)}>Delete</Button>

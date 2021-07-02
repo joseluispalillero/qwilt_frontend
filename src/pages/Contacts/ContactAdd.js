@@ -19,9 +19,28 @@ import { useNavigate} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {addContact} from "../../redux/actions/contactAction";
+import FormDialog from "src/components/Dialog";
+import React, {useState} from 'react';
 
 const ContactAdd = (props) => {
     const navigate = useNavigate();
+    const [url, setUrl] = useState([])
+    const [salida, setSalida] = React.useState("");
+
+    const onReturnFile = (url_) => {        
+        const allUrl = url
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("push para photo en form >>>>>>>>",url_[i])   
+            Progress(url_[i])         
+        }        
+        setUrl(allUrl);
+    }
+
+    const Progress = (data) => {
+        setSalida(data);
+    };
+
     return (
         <>
             <Helmet>
@@ -51,13 +70,15 @@ const ContactAdd = (props) => {
                             <Card sx={{width: "100%"}}>
                                 <CardContent>
                                     <Container maxWidth="sm">
+                                        
                                         <Formik
                                             initialValues={{
                                                 name: "",
                                                 email: "",
                                                 phone: "",
                                                 propertyId:  0,
-                                                type: 0
+                                                type: 0,
+                                                photos: url
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -88,6 +109,10 @@ const ContactAdd = (props) => {
                                                         </Typography>
                                                         <br/>
                                                     </Box>
+                                                    <div className="form-group">
+                                                        <br/>                                 
+                                                        {salida !== "" && <img src={salida} alt={salida.name} style={{height:150, width: 150, borderRadius:80}}/>}
+                                                    </div>
                                                     <TextField
                                                         error={Boolean(touched.name && errors.name)}
                                                         fullWidth
@@ -159,6 +184,7 @@ const ContactAdd = (props) => {
                                                             <MenuItem value="Interested">Interested</MenuItem>
                                                         </Select>
                                                     </FormControl>
+                                                    <FormDialog onReturnPhoto={onReturnFile} type={"single"} typeDoc={".jpg,.png"}/> 
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -190,7 +216,6 @@ const ContactAdd = (props) => {
         </>
     );
 };
-
 const mapStateToProps = state => ({
     properties: state.property.properties,
     userLogged: state.auth.userLogged,

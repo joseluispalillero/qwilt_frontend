@@ -20,31 +20,29 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
-
 import FormDialog from "src/components/Dialog";
-
 
 const PropertyEdit = (props) => {
     const navigate = useNavigate();
     const [property, setProperty] = useState({});
+    const [url, setUrl] = useState([])
     const { id } = useParams();
+
     useEffect(() => {
         fetchDataEdit()
     }, []);
+
     console.log("fotos,,,,,",property.photos);
     const fetchDataEdit = () => {
         setProperty(props.properties.filter(property => property._id === id )[0])
     };
-
-    const [url, setUrl] = useState([])
-
+    
     const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
             console.log("Edicion.............",url_[i])
-        }
-        
+        }        
         setUrl(allUrl);
     }
 
@@ -179,7 +177,7 @@ const PropertyEdit = (props) => {
                                                         value={values.targetRent}
                                                         variant="outlined"
                                                     />
-                                                     <FormDialog onReturnPhoto={onReturnFile} data={property.photos}/>
+                                                    <FormDialog onReturnPhoto={onReturnFile} data={property.photos} typeDoc={".jpg,.png"}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

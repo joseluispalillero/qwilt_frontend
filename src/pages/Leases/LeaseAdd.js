@@ -19,13 +19,31 @@ import { useNavigate} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {addLease} from "../../redux/actions/leaseAction";
+import FormDialog from "src/components/Dialog";
+import React, {useState} from 'react';
 
 const LeaseAdd = (props) => {
     const navigate = useNavigate();
     console.log(props.userLogged)
+    const [url, setUrl] = useState([])
+    const [salida, setSalida] = React.useState("");
 
     const leaseContacts = props.contacts.filter(contact => contact.type === "Tenant" || contact.type === "Interested")
     const leaseProperties = props.properties.filter(property => property.status === "Available")
+
+    const onReturnFile = (url_) => {        
+        const allUrl = url
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("push para photo en form >>>>>>>>",url_[i])   
+            Progress(url_[i])         
+        }        
+        setUrl(allUrl);
+    }
+
+    const Progress = (data) => {
+        setSalida(data);
+      };
 
     return (
         <>
@@ -64,7 +82,8 @@ const LeaseAdd = (props) => {
                                                 endDate: "",
                                                 rentalRate:"",
                                                 contactId:  0,
-                                                propertyId:  0
+                                                propertyId:  0,
+                                                docs: url,
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -192,6 +211,7 @@ const LeaseAdd = (props) => {
                                                         value={values.endDate}
                                                         variant="outlined"
                                                     />
+                                                    <FormDialog onReturnPhoto={onReturnFile} type={""} typeDoc={""}/> 
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

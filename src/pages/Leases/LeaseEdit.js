@@ -21,6 +21,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
+import FormDialog from "src/components/Dialog";
 
 const LeaseEdit = (props) => {
     const navigate = useNavigate();
@@ -35,6 +36,18 @@ const LeaseEdit = (props) => {
         console.log(props.leases)
         setLease(props.leases.filter(lease => lease._id === id )[0])
     };
+
+    console.log("docs,,,,,",lease.docs);
+    const [url, setUrl] = useState([])
+
+    const onReturnFile = (url_) => {
+        const allUrl = url
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("Edicion.............",url_[i])
+        }        
+        setUrl(allUrl);
+    }
 
     return (
         <>
@@ -74,7 +87,8 @@ const LeaseEdit = (props) => {
                                                 endDate: lease.endDate,
                                                 contactId : lease.contactId,
                                                 rentalRate: lease.rentalRate,
-                                                propertyId:  lease.propertyId
+                                                propertyId:  lease.propertyId,
+                                                docs: url,
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -200,7 +214,8 @@ const LeaseEdit = (props) => {
                                                         onChange={handleChange}
                                                         value={values.endDate}
                                                         variant="outlined"
-                                                    />                                                   
+                                                    />   
+                                                    <FormDialog onReturnPhoto={onReturnFile} data={values.docs} typeDoc={""}/>                                                
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

@@ -17,6 +17,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
+import FormDialog from "src/components/Dialog";
 
 const PortfolioEdit = (props) => {
     const navigate = useNavigate();
@@ -30,6 +31,18 @@ const PortfolioEdit = (props) => {
     const fetchDataEdit = () => {
         setPortfolio(props.portfolios.filter(portfolio => portfolio._id === id )[0])
     };
+
+    console.log("fotos,,,,,",portfolio.docs);
+    const [url, setUrl] = useState([])
+
+    const onReturnFile = (url_) => {
+        const allUrl = url
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("Edicion.............",url_[i])
+        }        
+        setUrl(allUrl);
+    }
 
     return (
         <>
@@ -65,7 +78,7 @@ const PortfolioEdit = (props) => {
                                             initialValues={{
                                                 nickname: portfolio.nickname,
                                                 capacityRatio: portfolio.capacityRatio,
-                                                files: "",
+                                                docs: url,
                                                 owner:  props.userLogged._id
                                             }}
                                             validationSchema={Yup.object().shape({
@@ -117,6 +130,7 @@ const PortfolioEdit = (props) => {
                                                         value={values.capacityRatio}
                                                         variant="outlined"
                                                     />
+                                                    <FormDialog onReturnPhoto={onReturnFile} data={values.docs} typeDoc={""}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

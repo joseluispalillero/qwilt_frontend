@@ -5,15 +5,17 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {Formik} from "formik";
 import * as yup from "yup";
-
-
+import LinearProgress from "src/components/LinearProgress";
 import Services from "../services/services";
-const uploadService = new Services();
 
+const uploadService = new Services();
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
+  const [salida, setSalida] = React.useState("");
 
+  console.log("Nos dice file multiple, ................ ",props.type)
+  console.log("Nos dice el archivo a subir, ..................",props.typeDoc)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -22,31 +24,38 @@ export default function FormDialog(props) {
     setOpen(false);
   };
 
-  const ImageThumb = ({ image }) => {  
-    return <img src={URL.createObjectURL(image)} alt={image.name} style={{height:200, width: 200, border:0}}/>;
+  const Progress = (data) => {
+    setSalida("Uploading...   " + data);
   };
-
-
 
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-       Add Photo
+       Add File
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add Image</DialogTitle>
         <DialogContent>
             <Formik 
-              initialValues={{ file: null }}
-              onSubmit={async (values) => {             
-                
+              initialValues={{ file: null, type:props.type ? props.type : "multiple" , typeDoc:props.typeDoc ? props.typeDoc : ".doc,.docx,application/msword,.xlsx,.xls,.pdf"}}
+              onSubmit={async (values) => {                   
                 const allImages = [];
-                for (let i = 0; i < values.file.length; i++) {
-                  console.log("Subiendo imagen ", i," >>>> ",values.file.name)
-                  const {data} = await uploadService.upload(values.file[i]) 
-                  allImages.push(data.data.image);                  
-                }
-          
+
+                if(props.type === "single"){
+                  console.log("Subiendo imagen >>>> ",values.file[0].name)
+                  const {data} = await uploadService.upload(values.file[0])   
+                  allImages.push(data.data.image); 
+                  Progress(values.file[0].name)   
+                }else{
+                  for (let i = 0; i < values.file.length; i++) {                  
+                    console.log("Subiendo imagen ", i," >>>> ",values.file[i].name)
+                    const {data} = await uploadService.upload(values.file[i])  
+                    allImages.push(data.data.image);                
+                    Progress(values.file[i].name)                                
+                  }  
+                }               
+                
+                
                 props.onReturnPhoto(allImages) 
                 handleClose()
               }} 
@@ -61,12 +70,21 @@ export default function FormDialog(props) {
                         <Button onClick={handleClose} color="primary">Close</Button> 
                     </div>
                     <div className="form-group">
-                      <label for="file">File upload</label>     
-                      <input id="file" name="file" type="file" multiple onChange={(event) => {
-                        setFieldValue("file", event.currentTarget.files);
-                        }} className="form-control" />
-                        <br/>
-                     {values.files && <ImageThumb image={values.files} />}
+                      <label for="file">File upload</label>   
+                      {props.type !== "single" ? 
+                        <input id="file" name="file" type="file"  accept={values.typeDoc} multiple onChange={(event) => {   
+                         setFieldValue("file", event.currentTarget.files);                        
+                        }} className="form-control" />   
+                        :
+                        <input id="file" name="file" type="file" accept={values.typeDoc}  onChange={(event) => {
+                          setFieldValue("file", event.currentTarget.files);                        
+                        }} className="form-control" />   
+                      }                                                                                       
+                    </div>
+                    <div className="form-group">
+                        <br/> 
+                        {salida !== "" && <LinearProgress />} 
+                        {salida}
                     </div>
                     <br/>
                   </form>

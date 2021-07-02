@@ -21,20 +21,31 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
-
+import FormDialog from "src/components/Dialog";
 
 const ContactEdit = (props) => {
     const navigate = useNavigate();
     const [contact, setContact] = useState({});
     const { id } = useParams();
-
+ 
     useEffect(() => {
         fetchDataEdit()
     }, []);
 
+    console.log("fotos>>>>>>>>>>",contact.photos);
     const fetchDataEdit = () => {
         setContact(props.contacts.filter(contact => contact._id === id )[0])
     };
+
+    const [url, setUrl] = useState([])
+    const onReturnFile = (url_) => {
+        const allUrl = url
+        for (let i = 0; i < url_.length; i++) {
+            allUrl.push(url_[i])
+            console.log("Edicion.............",url_[i])
+        }        
+        setUrl(allUrl);
+    }
 
     return (
         <>
@@ -72,7 +83,8 @@ const ContactEdit = (props) => {
                                                 email: contact.email,
                                                 phone: contact.phone,
                                                 type: contact.type,
-                                                propertyId: contact.propertyId
+                                                propertyId: contact.propertyId,
+                                                photos: url
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 name: Yup.string()
@@ -96,12 +108,16 @@ const ContactEdit = (props) => {
                                                   touched,
                                                   values,
                                               }) => (
-                                                <form onSubmit={handleSubmit}>
+                                                <form onSubmit={handleSubmit} >
                                                     <Box>
                                                         <Typography color="textPrimary" variant="h2">
                                                             Edit Contact
                                                         </Typography>
                                                     </Box>
+                                                    <div className="form-group">
+                                                        <br/>                                 
+                                                        {contact.photos !== "" && <img src={contact.photos} alt={contact.photos} style={{height:150, width: 150, borderRadius:80}}/>}
+                                                    </div>
                                                     <TextField
                                                         error={Boolean(touched.name && errors.name)}
                                                         fullWidth
@@ -175,6 +191,7 @@ const ContactEdit = (props) => {
                                                             <option value="Interested">Interested</option>
                                                         </NativeSelect>
                                                     </FormControl>
+                                                    <FormDialog onReturnPhoto={onReturnFile} data={contact.photos} type={"single"}  typeDoc={".jpg,.png"}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
