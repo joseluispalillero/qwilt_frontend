@@ -21,8 +21,6 @@ import {removeLease} from "../../redux/actions/leaseAction";
 import {connect} from "react-redux";
 import SimpleModal from "src/components/SimpleModal";
 
-
-
 const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLease,...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -67,11 +65,11 @@ const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLe
               <TableHead>
                 <TableRow>
                   <TableCell>Property</TableCell>
-                  <TableCell>Contact</TableCell> 
-                  <TableCell>Lease Name</TableCell>                  
-                  <TableCell>Status</TableCell>
-                  <TableCell>Target Rent</TableCell>   
-                  <TableCell>Docs</TableCell>            
+                  <TableCell>Contact</TableCell>
+                  <TableCell>Lease Name</TableCell>
+                  <TableCell>Occupation</TableCell>
+                  <TableCell>Target Rent</TableCell>
+                  <TableCell>Docs</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -83,15 +81,15 @@ const LeasesListResults = ({   leases,contacts, properties, userLogged, removeLe
                       <TableCell>{lease.propertyId?
                           (properties.filter(property=> property._id === lease.propertyId)[0]?
                               properties.filter(property=> property._id === lease.propertyId)[0].name : '') : ''}
-                      </TableCell>                      
+                      </TableCell>
                       <TableCell>{lease.contactId?
                           (contacts.filter(contact=> contact._id === lease.contactId)[0]?
                           contacts.filter(contact=> contact._id === lease.contactId)[0].name : '') : ''}
-                      </TableCell> 
-                      <TableCell>{lease.name}</TableCell>                     
-                      <TableCell>{lease.status}</TableCell>
-                      <TableCell>{lease.rentalRate}</TableCell>     
-                      <SimpleModal data={lease.docs} type="docs"/>                                        
+                      </TableCell>
+                      <TableCell>{lease.name}</TableCell>
+                      <TableCell> {moment(lease.startDate).format('YYYY/MM/DD')} to {moment(lease.endDate).format('YYYY/MM/DD')} </TableCell>
+                      <TableCell>{lease.rentalRate}</TableCell>
+                      <SimpleModal data={lease.docs} type="docs"/>
                       <TableCell>
                         <Button onClick={()=> handleEdit(lease)}>Edit</Button>
                         <Button color="secondary" onClick={()=> handleDelete(lease)}>Delete</Button>

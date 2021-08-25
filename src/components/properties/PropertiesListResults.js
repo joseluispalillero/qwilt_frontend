@@ -67,6 +67,7 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, removePr
                   <TableCell>Address</TableCell>
                   <TableCell>Description</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell>Occupancy Ratio</TableCell>
                   <TableCell>Target Rent</TableCell>
                   <TableCell>Current Rent</TableCell>
                   <TableCell>Portfolio</TableCell>
@@ -84,6 +85,7 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, removePr
                       <TableCell>{property.location}</TableCell>
                       <TableCell>{property.description}</TableCell>
                       <TableCell>{property.status}</TableCell>
+                      <TableCell>{property.capacityRatio}</TableCell>
                       <TableCell>{property.targetRent}</TableCell>
                       <TableCell>{property.currentRent}</TableCell>
                       <TableCell>{property.portfolioId?
@@ -93,7 +95,7 @@ const PropertiesListResults = ( {  properties, portfolios,  userLogged, removePr
                         {moment(property.createdAt).format("DD/MM/YYYY")}
                       </TableCell>
                       <TableCell>
-                         <SimpleModal data={property.photos} type=""/>   
+                         <SimpleModal data={property.photos} type=""/>
                       </TableCell>
                       <TableCell>
                         <Button onClick={()=> handleEdit(property)}>Edit</Button>
