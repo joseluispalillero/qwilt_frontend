@@ -65,10 +65,6 @@ export default function FormDialog(props) {
                             return (
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">
-                                        <Button type="submit" className="btn btn-primary">Upload</Button>
-                                        <Button onClick={handleClose} color="primary">Close</Button>
-                                    </div>
-                                    <div className="form-group">
                                         <label for="file">File upload</label>
                                         {props.type !== "single" ?
                                             <input id="file" name="file" type="file" accept={values.typeDoc} multiple
@@ -81,6 +77,10 @@ export default function FormDialog(props) {
                                                        setFieldValue("file", event.currentTarget.files);
                                                    }} className="form-control"/>
                                         }
+                                    </div>
+                                    <div className="form-group">
+                                        <Button type="submit" className="btn btn-primary">Upload selected files</Button>
+                                        <Button onClick={handleClose} color="secondary">Close</Button>
                                     </div>
                                     <div className="form-group">
                                         <br/>
