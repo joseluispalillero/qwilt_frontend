@@ -12,7 +12,7 @@ import {
     Typography,
     TextField,
     FormControl,
-    InputLabel
+    InputLabel, FormHelperText
 } from "@material-ui/core";
 import { updateProperty } from "../../redux/actions/propertyAction";
 import { connect } from "react-redux";
@@ -20,29 +20,30 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
+
 import FormDialog from "src/components/Dialog";
+
 
 const PropertyEdit = (props) => {
     const navigate = useNavigate();
     const [property, setProperty] = useState({});
     const [url, setUrl] = useState([])
     const { id } = useParams();
-
     useEffect(() => {
         fetchDataEdit()
     }, []);
-
     console.log("fotos,,,,,",property.photos);
     const fetchDataEdit = () => {
         setProperty(props.properties.filter(property => property._id === id )[0])
     };
-    
+
     const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
             console.log("Edicion.............",url_[i])
-        }        
+        }
+
         setUrl(allUrl);
     }
 
@@ -113,7 +114,14 @@ const PropertyEdit = (props) => {
                                                             Edit Property
                                                         </Typography>
                                                     </Box>
-                                                    <FormControl fullWidth>
+                                                    <Box
+                                                        sx={{
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            ml: 1,
+                                                        }}>
+                                                    </Box>
+                                                    <FormControl fullWidth error={errors.portfolioId}>
                                                         <InputLabel id="portfolio">Portfolio</InputLabel>
                                                         <NativeSelect
                                                             label="Portfolio"
@@ -127,6 +135,7 @@ const PropertyEdit = (props) => {
                                                                 <option value={portfolio._id}>{portfolio.nickname}</option>
                                                             )): null}
                                                         </NativeSelect>
+                                                        <FormHelperText>{touched.portfolioId && errors.portfolioId}</FormHelperText>
                                                     </FormControl>
                                                     <TextField
                                                         error={Boolean(touched.name && errors.name)}
@@ -177,7 +186,7 @@ const PropertyEdit = (props) => {
                                                         value={values.targetRent}
                                                         variant="outlined"
                                                     />
-                                                    <FormDialog onReturnPhoto={onReturnFile} data={property.photos} typeDoc={".jpg,.png"}/>
+                                                     <FormDialog onReturnPhoto={onReturnFile} data={property.photos} type={"multiple"} typeDoc={".jpg,.png"} />
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
@@ -199,7 +208,7 @@ const PropertyEdit = (props) => {
                                                 </form>
                                             )}
                                         </Formik>
-                                  
+
                                     </Container>
                                 </CardContent>
                             </Card>

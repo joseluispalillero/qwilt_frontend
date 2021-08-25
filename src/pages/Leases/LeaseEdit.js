@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import { Helmet } from "react-helmet";
 import {
     Box,
@@ -13,7 +13,7 @@ import {
     Typography,
     FormControl,
     InputLabel,
-    TextField
+    TextField, FormHelperText
 } from "@material-ui/core";
 import { updateLease } from "../../redux/actions/leaseAction";
 import { connect } from "react-redux";
@@ -22,11 +22,13 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {useEffect} from "react";
 import FormDialog from "src/components/Dialog";
+import ContactAddDialog from '../Contacts/ContactAddDialog';
 
 const LeaseEdit = (props) => {
     const navigate = useNavigate();
     const [lease, setLease] = useState({});
     const { id } = useParams();
+    const [ , setSalida] = React.useState("");
 
     useEffect(() => {
         fetchDataEdit()
@@ -37,17 +39,20 @@ const LeaseEdit = (props) => {
         setLease(props.leases.filter(lease => lease._id === id )[0])
     };
 
-    console.log("docs,,,,,",lease.docs);
     const [url, setUrl] = useState([])
 
     const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
-            console.log("Edicion.............",url_[i])
-        }        
+            Progress(url_[i])
+        }
         setUrl(allUrl);
     }
+
+    const Progress = (data) => {
+        setSalida(data);
+    };
 
     return (
         <>
@@ -96,7 +101,7 @@ const LeaseEdit = (props) => {
                                                 .required("Name is required"),
                                                 status: Yup.string()
                                                     .max(255)
-                                                    .required("Status is required"),                                               
+                                                    .required("Status is required"),
                                                 startDate: Yup.string().required("Start Date is required"),
                                                 endDate: Yup.string().required("End Date is required"),
                                                 rentalRate: Yup.string().required("Rental Rent is required"),
@@ -134,7 +139,7 @@ const LeaseEdit = (props) => {
                                                         value={values.name}
                                                         variant="outlined"
                                                     />
-                                                     <FormControl fullWidth margin="normal">
+                                                    <FormControl fullWidth margin="normal" error={errors.contactId}>
                                                         <InputLabel id="contact">Contact</InputLabel>
                                                         <Select
                                                             margin="normal"
@@ -149,8 +154,10 @@ const LeaseEdit = (props) => {
                                                                 <MenuItem value={contact._id}>{contact.name}</MenuItem>
                                                             )): null}
                                                         </Select>
+                                                        <FormHelperText>{touched.contactId && errors.contactId}</FormHelperText>
                                                     </FormControl>
-                                                    <FormControl fullWidth margin="normal">
+                                                    <ContactAddDialog />
+                                                    <FormControl fullWidth margin="normal" error={errors.propertyId}>
                                                         <InputLabel id="property">Property</InputLabel>
                                                         <Select
                                                             margin="normal"
@@ -165,20 +172,9 @@ const LeaseEdit = (props) => {
                                                                 <MenuItem value={property._id}>{property.name}</MenuItem>
                                                             )): null}
                                                         </Select>
+                                                        <FormHelperText>{touched.propertyId && errors.propertyId}</FormHelperText>
                                                     </FormControl>
                                                     <TextField
-                                                        error={Boolean(touched.status && errors.status)}
-                                                        fullWidth
-                                                        helperText={touched.status && errors.status}
-                                                        label="Status"
-                                                        margin="normal"
-                                                        name="status"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        value={values.status}
-                                                        variant="outlined"
-                                                    />
-                                                   <TextField
                                                         type="number"
                                                         error={Boolean(touched.rentalRate && errors.rentalRate)}
                                                         fullWidth
@@ -190,18 +186,22 @@ const LeaseEdit = (props) => {
                                                         onChange={handleChange}
                                                         value={values.rentalRate}
                                                         variant="outlined"
-                                                    />   
+                                                    />
                                                     <TextField
                                                         error={Boolean(touched.startDate && errors.startDate)}
                                                         fullWidth
                                                         helperText={touched.startDate && errors.startDate}
                                                         label="Start Date"
                                                         margin="normal"
+                                                        type="date"
                                                         name="startDate"
                                                         onBlur={handleBlur}
                                                         onChange={handleChange}
                                                         value={values.startDate}
                                                         variant="outlined"
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
                                                     />
                                                     <TextField
                                                         error={Boolean(touched.endDate && errors.endDate)}
@@ -214,8 +214,12 @@ const LeaseEdit = (props) => {
                                                         onChange={handleChange}
                                                         value={values.endDate}
                                                         variant="outlined"
-                                                    />   
-                                                    <FormDialog onReturnPhoto={onReturnFile} data={values.docs} typeDoc={""}/>                                                
+                                                        type="date"
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    />
+                                                    <FormDialog onReturnPhoto={onReturnFile} data={values.docs} typeDoc={""}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

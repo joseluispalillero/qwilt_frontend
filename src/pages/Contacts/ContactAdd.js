@@ -27,13 +27,12 @@ const ContactAdd = (props) => {
     const [url, setUrl] = useState([])
     const [salida, setSalida] = React.useState("");
 
-    const onReturnFile = (url_) => {        
+    const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
-            console.log("push para photo en form >>>>>>>>",url_[i])   
-            Progress(url_[i])         
-        }        
+            Progress(url_[i])
+        }
         setUrl(allUrl);
     }
 
@@ -70,7 +69,6 @@ const ContactAdd = (props) => {
                             <Card sx={{width: "100%"}}>
                                 <CardContent>
                                     <Container maxWidth="sm">
-                                        
                                         <Formik
                                             initialValues={{
                                                 name: "",
@@ -110,7 +108,7 @@ const ContactAdd = (props) => {
                                                         <br/>
                                                     </Box>
                                                     <div className="form-group">
-                                                        <br/>                                 
+                                                        <br/>
                                                         {salida !== "" && <img src={salida} alt={salida.name} style={{height:150, width: 150, borderRadius:80}}/>}
                                                     </div>
                                                     <TextField
@@ -184,7 +182,7 @@ const ContactAdd = (props) => {
                                                             <MenuItem value="Interested">Interested</MenuItem>
                                                         </Select>
                                                     </FormControl>
-                                                    <FormDialog onReturnPhoto={onReturnFile} type={"single"} typeDoc={".jpg,.png"}/> 
+                                                    <FormDialog onReturnPhoto={onReturnFile} type={"single"} typeDoc={".jpg,.png"}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

@@ -37,13 +37,12 @@ const AccountProfile = (props) => (
           }}
         />
         <Typography color="textPrimary" gutterBottom variant="h3">
-          {user.name}
+          {props.userLogged.firstName + ' ' + props.userLogged.lastName}
         </Typography>
         <Typography color="textSecondary" variant="body1">
-          {`${user.city} ${user.country}`}
+            {props.userLogged ? props.userLogged.role : ""}
         </Typography>
         <Typography color="textSecondary" variant="body1">
-          {`${moment().format("hh:mm A")} ${user.timezone}`}
         </Typography>
       </Box>
     </CardContent>

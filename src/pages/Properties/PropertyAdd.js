@@ -12,6 +12,7 @@ import {
     Typography,
     TextField,
     FormControl,
+    FormHelperText,
     InputLabel
 } from "@material-ui/core";
 import {getPortfolios} from "../../redux/actions/portfolioAction";
@@ -21,20 +22,21 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import React, {useState} from 'react';
 import {addProperty} from "../../redux/actions/propertyAction";
+
 import FormDialog from "src/components/Dialog";
 
 const PropertyAdd = (props) => {
-    const navigate = useNavigate();    
-    const [url, setUrl] = useState([])
-    const [salida, setSalida] = React.useState("");
+    const navigate = useNavigate();
 
-    const onReturnFile = (url_) => {        
+    const [url, setUrl] = useState([])
+    const [ , setSalida] = React.useState("");
+
+    const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
-            console.log("push para photo en form >>>>>>>>",url_[i])   
-            Progress(url_[i])         
-        }        
+           Progress(url_[i])
+        }
         setUrl(allUrl);
     }
 
@@ -77,16 +79,16 @@ const PropertyAdd = (props) => {
                                                 location: "",
                                                 description: "",
                                                 targetRent:  0,
-                                                portfolioId: 0,
+                                                portfolioId: "",
                                                 photos: url
                                             }}
                                             validationSchema={Yup.object().shape({
+                                                portfolioId: Yup.string().required("Portfolio is required"),
                                                 name: Yup.string()
                                                     .max(255)
                                                     .required("Name is required"),
                                                 location: Yup.string().max(2000).required("Location is required"),
                                                 targetRent: Yup.string().required("Target Rent is required"),
-                                                portfolioId: Yup.string().required("Portfolio is required"),
                                                 description: Yup.string().max(2000).required("Description is required")
                                             })}
                                             onSubmit={async (values) => {
@@ -110,21 +112,20 @@ const PropertyAdd = (props) => {
                                                         </Typography>
                                                         <br/>
                                                     </Box>
-                                                  
-                                                    <FormControl fullWidth>
+
+                                                    <FormControl fullWidth error={errors.portfolioId}>
                                                         <InputLabel id="portfolio">Portfolio</InputLabel>
                                                         <Select
-                                                            label="Portfolio"
                                                             helperText={touched.portfolioId && errors.portfolioId}
                                                             fullWidth
                                                             name="portfolioId"
-                                                            labelId="portfolio"
                                                             value={values.portfolioId}
                                                             onChange={handleChange}>
                                                             {props.portfolios? props.portfolios.map((portfolio) => (
                                                                 <MenuItem value={portfolio._id}>{portfolio.nickname}</MenuItem>
                                                             )): null}
                                                         </Select>
+                                                        <FormHelperText>{touched.portfolioId && errors.portfolioId}</FormHelperText>
                                                     </FormControl>
                                                     <TextField
                                                         error={Boolean(touched.description && errors.description)}
@@ -175,7 +176,7 @@ const PropertyAdd = (props) => {
                                                         value={values.targetRent}
                                                         variant="outlined"
                                                     />
-                                                    <FormDialog onReturnPhoto={onReturnFile} type={"multiple"} typeDoc={".jpg,.png"}/>                                             
+                                                    <FormDialog onReturnPhoto={onReturnFile} type={"multiple"} typeDoc={".jpg,.png"}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

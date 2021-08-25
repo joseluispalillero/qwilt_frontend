@@ -28,11 +28,13 @@ const user = {
 };
 
 const items = [
+    /**
   {
     href: "/app/dashboard",
     icon: HomeIcon,
     title: "Dashboard",
   },
+     **/
   {
     href: "/app/portfolio",
     icon: BriefcaseIcon,

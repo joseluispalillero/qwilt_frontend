@@ -22,6 +22,7 @@ import FormDialog from "src/components/Dialog";
 const PortfolioEdit = (props) => {
     const navigate = useNavigate();
     const [portfolio, setPortfolio] = useState({});
+    const [url, setUrl] = useState([])
     const { id } = useParams();
 
     useEffect(() => {
@@ -32,15 +33,13 @@ const PortfolioEdit = (props) => {
         setPortfolio(props.portfolios.filter(portfolio => portfolio._id === id )[0])
     };
 
-    console.log("fotos,,,,,",portfolio.docs);
-    const [url, setUrl] = useState([])
 
     const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
             console.log("Edicion.............",url_[i])
-        }        
+        }
         setUrl(allUrl);
     }
 
@@ -84,8 +83,7 @@ const PortfolioEdit = (props) => {
                                             validationSchema={Yup.object().shape({
                                                 nickname: Yup.string()
                                                     .max(255)
-                                                    .required("Nickname is required"),
-                                                capacityRatio: Yup.string().max(255).required("Capacity ratio is required")
+                                                    .required("Nickname is required")
                                             })}
                                             onSubmit={async (values) => {
                                                 await props.updatePortfolio(id, values)
@@ -118,19 +116,14 @@ const PortfolioEdit = (props) => {
                                                         value={values.nickname}
                                                         variant="outlined"
                                                     />
-                                                    <TextField
-                                                        error={Boolean(touched.capacityRatio && errors.capacityRatio)}
-                                                        fullWidth
-                                                        helperText={touched.lastName && errors.capacityRatio}
-                                                        label="Capacity Ratio"
-                                                        margin="normal"
-                                                        name="capacityRatio"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        value={values.capacityRatio}
-                                                        variant="outlined"
-                                                    />
                                                     <FormDialog onReturnPhoto={onReturnFile} data={values.docs} typeDoc={""}/>
+                                                    <Box
+                                                        sx={{
+                                                            alignItems: "center",
+                                                            display: "flex",
+                                                            ml: -1,
+                                                        }}>
+                                                    </Box>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",

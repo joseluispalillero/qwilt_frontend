@@ -8,7 +8,6 @@ import {
     CardContent,
     Container,
     Link,
-    MenuItem,
     Typography,
     TextField,
     FormControl,
@@ -27,7 +26,7 @@ const ContactEdit = (props) => {
     const navigate = useNavigate();
     const [contact, setContact] = useState({});
     const { id } = useParams();
- 
+
     useEffect(() => {
         fetchDataEdit()
     }, []);
@@ -43,7 +42,7 @@ const ContactEdit = (props) => {
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
             console.log("Edicion.............",url_[i])
-        }        
+        }
         setUrl(allUrl);
     }
 
@@ -115,7 +114,7 @@ const ContactEdit = (props) => {
                                                         </Typography>
                                                     </Box>
                                                     <div className="form-group">
-                                                        <br/>                                 
+                                                        <br/>
                                                         {contact.photos !== "" && <img src={contact.photos} alt={contact.photos} style={{height:150, width: 150, borderRadius:80}}/>}
                                                     </div>
                                                     <TextField

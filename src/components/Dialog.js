@@ -10,88 +10,89 @@ import Services from "../services/services";
 
 const uploadService = new Services();
 
+
 export default function FormDialog(props) {
-  const [open, setOpen] = React.useState(false);
-  const [salida, setSalida] = React.useState("");
+    const [open, setOpen] = React.useState(false);
+    const [salida, setSalida] = React.useState("");
 
-  console.log("Nos dice file multiple, ................ ",props.type)
-  console.log("Nos dice el archivo a subir, ..................",props.typeDoc)
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-  const Progress = (data) => {
-    setSalida("Uploading...   " + data);
-  };
+    const Progress = (data) => {
+        setSalida("Uploading...   " + data);
+    };
 
-  return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-       Add File
-      </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add Image</DialogTitle>
-        <DialogContent>
-            <Formik 
-              initialValues={{ file: null, type:props.type ? props.type : "multiple" , typeDoc:props.typeDoc ? props.typeDoc : ".doc,.docx,application/msword,.xlsx,.xls,.pdf"}}
-              onSubmit={async (values) => {                   
-                const allImages = [];
+    return (
+        <div>
+            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                Add File
+            </Button>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Add Files</DialogTitle>
+                <DialogContent>
+                    <Formik
+                        initialValues={{
+                            file: null,
+                            type: props.type ? props.type : "multiple",
+                            typeDoc: props.typeDoc ? props.typeDoc : ".doc,.docx,application/msword,.xlsx,.xls,.pdf"
+                        }}
+                        onSubmit={async (values) => {
+                            const allImages = [];
 
-                if(props.type === "single"){
-                  console.log("Subiendo imagen >>>> ",values.file[0].name)
-                  const {data} = await uploadService.upload(values.file[0])   
-                  allImages.push(data.data.image); 
-                  Progress(values.file[0].name)   
-                }else{
-                  for (let i = 0; i < values.file.length; i++) {                  
-                    console.log("Subiendo imagen ", i," >>>> ",values.file[i].name)
-                    const {data} = await uploadService.upload(values.file[i])  
-                    allImages.push(data.data.image);                
-                    Progress(values.file[i].name)                                
-                  }  
-                }               
-                
-                
-                props.onReturnPhoto(allImages) 
-                handleClose()
-              }} 
-              validationSchema={yup.object().shape({
-                file: yup.mixed().required(),
-              })}
-              render={({ values, handleSubmit, setFieldValue }) => {
-                return (
-                  <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <Button type="submit" className="btn btn-primary">Upload</Button>
-                        <Button onClick={handleClose} color="primary">Close</Button> 
-                    </div>
-                    <div className="form-group">
-                      <label for="file">File upload</label>   
-                      {props.type !== "single" ? 
-                        <input id="file" name="file" type="file"  accept={values.typeDoc} multiple onChange={(event) => {   
-                         setFieldValue("file", event.currentTarget.files);                        
-                        }} className="form-control" />   
-                        :
-                        <input id="file" name="file" type="file" accept={values.typeDoc}  onChange={(event) => {
-                          setFieldValue("file", event.currentTarget.files);                        
-                        }} className="form-control" />   
-                      }                                                                                       
-                    </div>
-                    <div className="form-group">
-                        <br/> 
-                        {salida !== "" && <LinearProgress />} 
-                        {salida}
-                    </div>
-                    <br/>
-                  </form>
-                );
-              }} />           
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
+                            if (props.type === "single") {
+                                const {data} = await uploadService.upload(values.file[0])
+                                allImages.push(data.data.image);
+                                Progress(values.file[0].name)
+                            } else {
+                                for (let i = 0; i < values.file.length; i++) {
+                                    const {data} = await uploadService.upload(values.file[i])
+                                    allImages.push(data.data.image);
+                                    Progress(values.file[i].name)
+                                }
+                            }
+                            props.onReturnPhoto(allImages)
+                            handleClose()
+                        }}
+                        validationSchema={yup.object().shape({
+                            file: yup.mixed().required(),
+                        })}
+                        render={({values, handleSubmit, setFieldValue}) => {
+                            return (
+                                <form onSubmit={handleSubmit}>
+                                    <div className="form-group">
+                                        <Button type="submit" className="btn btn-primary">Upload</Button>
+                                        <Button onClick={handleClose} color="primary">Close</Button>
+                                    </div>
+                                    <div className="form-group">
+                                        <label for="file">File upload</label>
+                                        {props.type !== "single" ?
+                                            <input id="file" name="file" type="file" accept={values.typeDoc} multiple
+                                                   onChange={(event) => {
+                                                       setFieldValue("file", event.currentTarget.files);
+                                                   }} className="form-control"/>
+                                            :
+                                            <input id="file" name="file" type="file" accept={values.typeDoc}
+                                                   onChange={(event) => {
+                                                       setFieldValue("file", event.currentTarget.files);
+                                                   }} className="form-control"/>
+                                        }
+                                    </div>
+                                    <div className="form-group">
+                                        <br/>
+                                        {salida !== "" && <LinearProgress/>}
+                                        {salida}
+                                    </div>
+                                    <br/>
+                                </form>
+                            );
+                        }}/>
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
 }

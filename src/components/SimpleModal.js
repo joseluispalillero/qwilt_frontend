@@ -38,8 +38,10 @@ export default function TransitionsModal(props) {
 
   const Progress = (data) => {
     var sample = [];
-    for (let i = 0; i < data.length; i++) {    
-      sample.push(<div><a href={data[i]}  target="_blank">Document upload: {(i+1)}</a></div> );
+    if (data){
+      for (let i = 0; i < data.length; i++) {
+        sample.push(<div><a href={data[i]}  target="_blank">Document upload: {(i+1)}</a></div> );
+      }
     }
     return sample;
   };
@@ -64,8 +66,8 @@ export default function TransitionsModal(props) {
         <Fade in={open}>
           <div className={classes.paper}>
             <h2 id="transition-modal-title">{props.type !== "docs" ?  "Gallery": "Documents" }   </h2><br/>
-            {props.type !== "docs" ?  <Gallery data={props}/> :  Progress(props.data)  }    
-            
+            {props.type !== "docs" ?  <Gallery data={props}/> :  Progress(props.data)  }
+
           </div>
         </Fade>
       </Modal>

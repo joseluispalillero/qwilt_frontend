@@ -21,15 +21,15 @@ import FormDialog from "src/components/Dialog";
 const PortfolioAdd = (props) => {
     const navigate = useNavigate();
     const [url, setUrl] = useState([])
-    const [salida, setSalida] = React.useState("");
+    const [ , setSalida] = React.useState("");
 
-    const onReturnFile = (url_) => {        
+    const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
             allUrl.push(url_[i])
-            console.log("push para photo en form >>>>>>>>",url_[i])   
-            Progress(url_[i])         
-        }        
+            console.log("push para photo en form >>>>>>>>",url_[i])
+            Progress(url_[i])
+        }
         setUrl(allUrl);
     }
 
@@ -110,19 +110,7 @@ const PortfolioAdd = (props) => {
                                                         value={values.nickname}
                                                         variant="outlined"
                                                     />
-                                                    <TextField
-                                                        error={Boolean(touched.capacityRatio && errors.capacityRatio)}
-                                                        fullWidth
-                                                        helperText={touched.lastName && errors.capacityRatio}
-                                                        label="Capacity Ratio"
-                                                        margin="normal"
-                                                        name="capacityRatio"
-                                                        onBlur={handleBlur}
-                                                        onChange={handleChange}
-                                                        value={values.capacityRatio}
-                                                        variant="outlined"
-                                                    />
-                                                    <FormDialog onReturnPhoto={onReturnFile} type={""} typeDoc={""}/>    
+                                                    <FormDialog onReturnPhoto={onReturnFile} type={""} typeDoc={""}/>
                                                     <Box
                                                         sx={{
                                                             alignItems: "center",
