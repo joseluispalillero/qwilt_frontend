@@ -8,7 +8,7 @@ import configureStore from "./redux/store";
 import history from "./services/history";
 import httpService from "./services/interceptors";
 
-httpService.setupInterceptors(history);
+httpService(history);
 const { persistor, store } = configureStore();
 
 ReactDOM.render(
