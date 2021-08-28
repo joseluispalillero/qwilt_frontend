@@ -60,7 +60,7 @@ const PropertyEdit = (props) => {
                     py: 3,
                 }}>
                 <Container maxWidth={false}>
-                    <Box {...props}>
+                    <Box>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link color="inherit" onClick={()=> navigate("/app/properties", {replace: true})} href='#'>
                                 Properties

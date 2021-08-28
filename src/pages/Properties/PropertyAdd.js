@@ -24,6 +24,7 @@ import React, {useState} from 'react';
 import {addProperty} from "../../redux/actions/propertyAction";
 
 import FormDialog from "src/components/Dialog";
+import PortfolioAddDialog from "../Portfolio/PortfolioAddDialog";
 
 const PropertyAdd = (props) => {
     const navigate = useNavigate();
@@ -56,7 +57,7 @@ const PropertyAdd = (props) => {
                     py: 3,
                 }}>
                 <Container maxWidth={false}>
-                    <Box {...props}>
+                    <Box>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link color="inherit" href="/app/properties">
                                 Properties
@@ -127,6 +128,7 @@ const PropertyAdd = (props) => {
                                                         </Select>
                                                         <FormHelperText>{touched.portfolioId && errors.portfolioId}</FormHelperText>
                                                     </FormControl>
+                                                    <PortfolioAddDialog />
                                                     <TextField
                                                         error={Boolean(touched.description && errors.description)}
                                                         fullWidth

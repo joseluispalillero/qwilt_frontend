@@ -56,7 +56,7 @@ const PortfolioEdit = (props) => {
                     py: 3,
                 }}>
                 <Container maxWidth={false}>
-                    <Box {...props}>
+                    <Box>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link color="inherit" href="/app/portfolio">
                                 Portfolios

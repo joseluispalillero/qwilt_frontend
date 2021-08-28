@@ -19,10 +19,10 @@ import React, {useState} from 'react';
 import FormDialog from "src/components/Dialog";
 
 const PortfolioAdd = (props) => {
+    console.log("data>>><", props)
     const navigate = useNavigate();
     const [url, setUrl] = useState([])
     const [ , setSalida] = React.useState("");
-
     const onReturnFile = (url_) => {
         const allUrl = url
         for (let i = 0; i < url_.length; i++) {
@@ -49,7 +49,7 @@ const PortfolioAdd = (props) => {
                     py: 3,
                 }}>
                 <Container maxWidth={false}>
-                    <Box {...props}>
+                    <Box>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link color="inherit" href="/app/portfolio">
                                 Portfolios
@@ -69,15 +69,13 @@ const PortfolioAdd = (props) => {
                                         <Formik
                                             initialValues={{
                                                 nickname: "",
-                                                capacityRatio: "",
                                                 docs: url,
                                                 owner:  props.userLogged._id
                                             }}
                                             validationSchema={Yup.object().shape({
                                                 nickname: Yup.string()
                                                     .max(255)
-                                                    .required("Nickname is required"),
-                                                capacityRatio: Yup.string().max(255).required("Capacity ratio is required")
+                                                    .required("Nickname is required")
                                             })}
                                             onSubmit={async (values) => {
                                                 await props.addPortfolio(values)

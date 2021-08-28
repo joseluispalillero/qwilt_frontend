@@ -44,7 +44,7 @@ const Login = (props) => {
             })}
             onSubmit={async (values) => {
                 await props.logInUser(values)
-                navigate("/app/dashboard", { replace: true });
+                navigate("/", { replace: true });
             }}>
             {({
               errors,
