@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {button} from "@material-ui/core";
 
 export default class GalleryModal extends Component {
     constructor(props) {
@@ -25,18 +26,18 @@ export default class GalleryModal extends Component {
         return(
             <div className="modal-overlay" >
                 <div className="modal-body" >
-                    <a className="modal-close" href='#' onClick={this.props.closeModal} >
+                    <button className="modal-close" onClick={this.props.closeModal} >
                         <span className='fa fa-times' />
-                    </a>
+                    </button>
                     <img src={this.state.src} alt="" />
                 </div>
-                <a className='card-arrow-left' href='#' onClick={() => this.changeImage(this.props.data.data[this.props.data.data.indexOf(this.state.src)-1])} >
+                <button className='card-arrow-left' onClick={() => this.changeImage(this.props.data.data[this.props.data.data.indexOf(this.state.src)-1])} >
                     <span className='fa fa-arrow-left' />
-                </a>
+                </button>
 
-                <a className='card-arrow-right' href='#' onClick={() => this.changeImage(this.props.data.data[this.props.data.data.indexOf(this.state.src)+1])} >
+                <button className='card-arrow-right' onClick={() => this.changeImage(this.props.data.data[this.props.data.data.indexOf(this.state.src)+1])} >
                     <span className='fa fa-arrow-right' />
-                </a>
+                </button>
             </div>
         )
     }

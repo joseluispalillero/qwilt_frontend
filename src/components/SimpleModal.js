@@ -40,7 +40,7 @@ export default function TransitionsModal(props) {
     var sample = [];
     if (data){
       for (let i = 0; i < data.length; i++) {
-        sample.push(<div><a href={data[i]}  target="_blank">Document upload: {(i+1)}</a></div> );
+        sample.push(<div><a href={data[i]}  target="_blank" rel="noreferrer">Document upload: {(i+1)}</a></div> );
       }
     }
     return sample;

@@ -31,6 +31,7 @@ const PropertyEdit = (props) => {
     const { id } = useParams();
     useEffect(() => {
         fetchDataEdit()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     console.log("fotos,,,,,",property.photos);
     const fetchDataEdit = () => {

@@ -6,8 +6,6 @@ import {
   Box,
   Button,
   Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-  Menu,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
@@ -91,7 +89,7 @@ const PortfoliosListResults = ({ portfolios, userLogged, removePortfolio, ...res
                   <TableCell>{userLogged.firstName + " " + userLogged.lastName}</TableCell>
                   <TableCell>{portfolio.capacityRatio}</TableCell>
                   <TableCell>
-                     <SimpleModal data={portfolio.docs} type="docs"/> 
+                     <SimpleModal data={portfolio.docs} type="docs"/>
                   </TableCell>
                   <TableCell>
                     {moment(portfolio.createdAt).format("DD/MM/YYYY")}

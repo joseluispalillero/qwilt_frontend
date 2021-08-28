@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import GalleryImage from "./GalleryImage.js"
-import GalleryModal from "./GalleryModalSimple.js"
 import Zoom from 'react-img-zoom'
 
 import    './Gallery.css';

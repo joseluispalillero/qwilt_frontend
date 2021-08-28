@@ -3,7 +3,6 @@ import { Box, Container, Grid } from "@material-ui/core";
 import AccountProfile from "src/components/account/AccountProfile";
 import AccountProfileDetails from "src/components/account/AccountProfileDetails";
 import {connect} from "react-redux";
-import {signUpUser} from "../redux/actions/authAction";
 
 const Account = (props) => (
   <>

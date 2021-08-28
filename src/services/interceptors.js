@@ -1,13 +1,12 @@
 import axios from "axios";
 
-export default {
-  setupInterceptors: (history) => {
-    axios.interceptors.request.use((request) => {
-      document.getElementById("spinner").style.visibility = "visible";
-      return request;
-    });
+const setupInterceptors = (history) => {
+  axios.interceptors.request.use((request) => {
+    document.getElementById("spinner").style.visibility = "visible";
+    return request;
+  });
 
-    axios.interceptors.response.use(
+  axios.interceptors.response.use(
       (response) => {
         document.getElementById("spinner").style.visibility = "hidden";
         return response;
@@ -26,6 +25,7 @@ export default {
         }
         return Promise.reject(error);
       }
-    );
-  },
-};
+  );
+}
+
+export default setupInterceptors

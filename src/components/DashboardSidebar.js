@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import {
   Briefcase as BriefcaseIcon,
-  Home as HomeIcon,
   MapPin as MapPinIcon,
   Settings as SettingsIcon,
   Star as StarIcon,

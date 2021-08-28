@@ -6,24 +6,9 @@ import {Formik} from "formik";
 import {useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
 
-const states = [
-    {
-        value: "alabama",
-        label: "Alabama",
-    },
-    {
-        value: "new-york",
-        label: "New York",
-    },
-    {
-        value: "san-francisco",
-        label: "San Francisco",
-    },
-];
-
 const AccountProfileDetails = (props) => {
     const navigate = useNavigate();
-    const [values, setValues] = useState({
+    const [values] = useState({
         firstName: props.userLogged.firstName,
         lastName: props.userLogged.lastName,
         email: props.userLogged.email,
@@ -31,14 +16,7 @@ const AccountProfileDetails = (props) => {
         state: props.userLogged.state,
         country: props.userLogged.country,
     });
-    const [id, setId] = useState(props.userLogged.id)
-
-    const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
-    };
+    const [id] = useState(props.userLogged.id)
 
     return (
         <Card>

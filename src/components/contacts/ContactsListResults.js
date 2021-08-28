@@ -6,15 +6,12 @@ import {
   Box,
   Button,
   Card, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-  Menu,
-  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from "@material-ui/core";
 import {useNavigate} from "react-router-dom";
 import {removeContact} from "../../redux/actions/contactAction";

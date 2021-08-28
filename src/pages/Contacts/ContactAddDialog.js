@@ -19,7 +19,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 const  ContactAddDialog = (props) => {
     const [open, setOpen] = useState(false);
-    const [salida, setSalida] = useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -27,10 +26,6 @@ const  ContactAddDialog = (props) => {
 
     const handleClose = () => {
         setOpen(false);
-    };
-
-    const Progress = (data) => {
-        setSalida("Uploading...   " + data);
     };
 
     return (
@@ -72,14 +67,6 @@ const  ContactAddDialog = (props) => {
                                   values,
                               }) => (
                                 <form onSubmit={handleSubmit}>
-                                    <div className="form-group">
-                                        <br/>
-                                        {salida !== "" && <img src={salida} alt={salida.name} style={{
-                                            height: 150,
-                                            width: 150,
-                                            borderRadius: 80
-                                        }}/>}
-                                    </div>
                                     <TextField
                                         error={Boolean(touched.name && errors.name)}
                                         fullWidth

@@ -29,9 +29,9 @@ const ContactEdit = (props) => {
 
     useEffect(() => {
         fetchDataEdit()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log("fotos>>>>>>>>>>",contact.photos);
     const fetchDataEdit = () => {
         setContact(props.contacts.filter(contact => contact._id === id )[0])
     };
