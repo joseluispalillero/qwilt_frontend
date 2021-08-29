@@ -184,7 +184,7 @@ const ContactEdit = (props) => {
                                                             defaultValue={values.type}
                                                             value={values.type}
                                                             onChange={handleChange}>
-                                                            <option value="Landlord">Landlord</option>
+                                                            <option value="Owner">Owner</option>
                                                             <option value="Property Manager">Property Manager</option>
                                                             <option value="Tenant">Tenant</option>
                                                             <option value="Interested">Interested</option>

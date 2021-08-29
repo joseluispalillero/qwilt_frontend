@@ -176,7 +176,7 @@ const ContactAdd = (props) => {
                                                             labelId="type"
                                                             value={values.type}
                                                             onChange={handleChange}>
-                                                            <MenuItem value="Landlord">Landlord</MenuItem>
+                                                            <MenuItem value="Owner">Owner</MenuItem>
                                                             <MenuItem value="Property Manager">Property Manager</MenuItem>
                                                             <MenuItem value="Tenant">Tenant</MenuItem>
                                                             <MenuItem value="Interested">Interested</MenuItem>
